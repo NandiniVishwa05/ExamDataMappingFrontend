@@ -1,0 +1,17 @@
+.manageusersmaincontainer{
+    width: 80vw;
+}
+
+.adduserinputitem{
+    /* justify-content:space-evenly; */
+    /* gap: 1vw; */
+}
+
+.manageuserstable{
+    width: 95%;
+    padding: 0 2vw;
+    padding-top: 1vw;
+}
+.userinputerrormsgdiv{
+    padding: 0 2vw;
+}

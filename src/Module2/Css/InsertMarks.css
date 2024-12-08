@@ -1,0 +1,151 @@
+.insertmarkmodulesmaincontainer {
+    /* margin-left: 20vw; */
+    width: 80vw;
+}
+
+.selectprogramheader {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 3vh 2vw;
+}
+
+.selectprograminputlist {
+    /* width: 9; */
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 2vw;
+    padding-top: 3vh;
+    justify-content: space-between;
+}
+
+.selectprograminputitem {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    padding-bottom: 4vh;
+}
+
+.selectprograminputitem select {
+    border: 1px solid black;
+    width: 70%;
+}
+
+.selectprograminputitem input {
+    border: 1px solid black;
+    width: 70%;
+}
+
+.selectprogramsubmitbtncontainer {
+    display: flex;
+    padding: 0 2vw;
+}
+
+.selectprogramsubmitbtn {
+    padding: 1.5vh 3vw;
+    background-color: rgb(0, 0, 120);
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.selectprogramprevbtn {
+    padding: 1.5vh 3vw;
+    background-color: rgb(129, 129, 129);
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.selectprogramprevbtn:hover {
+    background-color: rgb(99, 98, 98);
+}
+
+.insertmarksmaincontainer {
+    display: none;
+    margin-top: 4vh;
+}
+
+.insertmarkssubmitbtncontainer {
+    display: flex;
+    padding: 0 2vw;
+    gap: 2vw;
+}
+
+.selectprograminputrollnoitem {
+    width: 100%;
+    justify-content: center;
+    /* gap: 6.5vw; */
+    gap: 2vw;
+}
+
+.selectprograminputrollnoitem input {
+    width: 20%;
+}
+
+.insertmarksinputlist {
+    padding-top: 0;
+}
+
+.selectprogramsubmitbtn:hover {
+    background-color: rgba(0, 0, 100);
+}
+
+.selectprogrammaincontainer .selectprograminputlist .selectprograminputitem select {
+
+    border: 1px solid #acacac;
+}
+
+.selectprogrammaincontainer .selectprograminputlist .selectprograminputitem input {
+    background-color: #FAF6F6;
+    outline: none;
+    /* color: #9F9E9E; */
+    border: 1px solid #acacac;
+}
+
+.selectprogramerrormsg {
+    display: flex;
+    align-items: center;
+    margin-left: 2vw;
+}
+
+.popupbox {
+    display: none;
+    flex-direction: column;
+    top: 38%;
+    left: 40%;
+    z-index: 5;
+    gap: 2vh;
+    width: 25vw;
+    position: fixed;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: white;
+    padding: 25px 20px;
+    border-radius: 5px;
+}
+
+.overlay{
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.452);
+    position: fixed;
+    z-index: 3;
+}
+
+.popupboxsection1 {
+    font-size: 1.2rem;
+}
+
+.popupboxsection2 {
+    display: flex;
+    gap: 1vw;
+}
+
+.insertdatabtn{
+    font-size: 1.1rem;
+}
+
+.qerrormsg{
+    display: flex;
+    align-items: center;
+}
