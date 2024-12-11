@@ -1,5 +1,4 @@
 .insertmarkmodulesmaincontainer {
-    /* margin-left: 20vw; */
     width: 80vw;
 }
 
@@ -10,7 +9,6 @@
 }
 
 .selectprograminputlist {
-    /* width: 9; */
     display: flex;
     flex-wrap: wrap;
     padding: 0 2vw;
@@ -74,7 +72,6 @@
 .selectprograminputrollnoitem {
     width: 100%;
     justify-content: center;
-    /* gap: 6.5vw; */
     gap: 2vw;
 }
 
@@ -98,7 +95,6 @@
 .selectprogrammaincontainer .selectprograminputlist .selectprograminputitem input {
     background-color: #FAF6F6;
     outline: none;
-    /* color: #9F9E9E; */
     border: 1px solid #acacac;
 }
 
@@ -148,4 +144,8 @@
 .qerrormsg{
     display: flex;
     align-items: center;
+}
+
+.managecourseinputitem{
+    padding-bottom: 0;
 }

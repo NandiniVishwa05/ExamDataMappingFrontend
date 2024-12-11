@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 export default function Insertmarks() {
     const [courses, setCourses] = useState([]);
     const [subjects, setSubjects] = useState([]);
-    const [courseName, setCourseName] = useState();
     const [courseId, setCourseId] = useState();
     const [subjectId, setSubjectId] = useState();
     const [programId, setProgramId] = useState();
+
+
     const fetchcourses = async () => {
         let res = await fetch(`http://localhost:4000/fetchcourses`, {
             method: 'GET'
@@ -24,18 +25,31 @@ export default function Insertmarks() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        console.log(e.target.value);
-        setCourseName(e.target.value);
         let res = await fetch(`http://localhost:4000/fetchcourseid/${e.target.value}`, {
             method: 'GET'
         });
 
         res = await res.json();
-        console.log(res);
 
         if (res !== "error") {
             setCourseId(res[0].course_id);
+            fetchsemanddiv(res[0].course_id);
         }
+    }
+
+
+    const [semester, setSemester] = useState([]);
+    const [division, setDivision] = useState([]);
+    let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const fetchsemanddiv = async (courseid) => {
+        let res = await fetch(`http://localhost:4000/fetchsemanddiv/${courseid}`, {
+            method: 'GET'
+        })
+
+        res = await res.json();
+        setSemester(res.data[0].no_of_semester);
+        setDivision(res.data[0].no_of_division);
     }
 
     const fetchSubjects = async (e) => {
@@ -44,7 +58,6 @@ export default function Insertmarks() {
         });
 
         res = await res.json();
-        console.log(res);
 
         if (res !== "error") {
             setSubjects(res);
@@ -57,7 +70,7 @@ export default function Insertmarks() {
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res !== "error") {
             setSubjectId(res[0].subject_id);
@@ -100,7 +113,7 @@ export default function Insertmarks() {
             subject_code: document.getElementsByClassName('inputitem')[6].value,
             faculty_name: document.getElementsByClassName('inputitem')[7].value
         }
-        console.log("hey");
+        // console.log("hey");
 
         let res = await fetch('http://localhost:4000/fetchprogramid', {
             method: 'POST',
@@ -112,7 +125,7 @@ export default function Insertmarks() {
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res.msg === "found") {
             document.querySelector('.overlay').style.display = "flex";
@@ -138,7 +151,7 @@ export default function Insertmarks() {
     }
 
     const overrideprogramdata = async () => {
-        console.log(document.getElementsByClassName('inputitem')[0].value);
+        // console.log(document.getElementsByClassName('inputitem')[0].value);
         let data = {
             program_id: programId,
             exam_pattern: document.getElementsByClassName('inputitem')[0].value,
@@ -190,12 +203,12 @@ export default function Insertmarks() {
 
         for (let i = 0; i < element.length; i++) {
             if (/^\d+$/.test(element[i].value)) {
-                console.log("number hai");
+                // console.log("number hai");
                 element[i].style.borderColor = "#acacac";
             } else {
                 element[i].style.borderColor = "red";
                 errorcount++;
-                console.log(element[i].value);
+                // console.log(element[i].value);
             }
         }
         if (errorcount > 0) {
@@ -224,7 +237,7 @@ export default function Insertmarks() {
             },
         });
         res = await res.json();
-        console.log(res);
+        // console.log(res);
         if (res.msg === "Inserted marks") {
             let elements = document.getElementsByClassName('qitem');
             for (let i = 0; i < elements.length; i++) {
@@ -286,6 +299,7 @@ export default function Insertmarks() {
                                 <p>Course Name</p>
                                 <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     fetchCourseId(e);
+
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[2].disabled = false;
                                 }}>
@@ -316,9 +330,11 @@ export default function Insertmarks() {
                                     elements[4].disabled = false;
                                 }}>
                                     <option value="Select...">Select...</option>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
+                                    {divs.map((item, index) => (
+                                        <>
+                                            {index < division ? <option value={item}>{item}</option> : null}
+                                        </>
+                                    ))}
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
@@ -329,12 +345,11 @@ export default function Insertmarks() {
                                     fetchSubjects(e)
                                 }}>
                                     <option value="Select...">Select...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                                    {sems.map((item, index) => (
+                                        <>
+                                            {item <= semester ? <option value={item}>{item}</option> : null}
+                                        </>
+                                    ))}
                                 </select>
                             </div>
                             <div className="selectprograminputitem">

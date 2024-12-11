@@ -6,7 +6,6 @@ export default function GenerateReport() {
     const [courses, setCourses] = useState([]);
     const [courseId, setCourseId] = useState();
     const [subjects, setSubjects] = useState([]);
-    const [courseName, setCourseName] = useState();
     const [subjectId, setSubjectId] = useState();
     const [studentData, setStudentData] = useState([]);
     const [subjectCode, setSubjectCode] = useState();
@@ -16,28 +15,45 @@ export default function GenerateReport() {
             method: 'GET'
         })
         res = await res.json();
-        console.log(res);
+        // console.log(res);
         if (res !== "error") {
             setCourses(res);
         }
     }
+
     const fetchCourseId = async (e) => {
         setSubjects([]);
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        console.log(e.target.value);
-        setCourseName(e.target.value);
+        // console.log(e.target.value);
         let res = await fetch(`http://localhost:4000/fetchcourseid/${e.target.value}`, {
             method: 'GET'
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res !== "error") {
             setCourseId(res[0].course_id);
+            fetchsemanddiv(res[0].course_id);
         }
+    }
+
+
+    const [semester, setSemester] = useState([]);
+    const [division, setDivision] = useState([]);
+    let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const fetchsemanddiv = async (courseid) => {
+        let res = await fetch(`http://localhost:4000/fetchsemanddiv/${courseid}`, {
+            method: 'GET'
+        })
+
+        res = await res.json();
+        // console.log(res);
+        setSemester(res.data[0].no_of_semester);
+        setDivision(res.data[0].no_of_division);
     }
 
     const fetchSubjects = async (e) => {
@@ -46,7 +62,7 @@ export default function GenerateReport() {
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res !== "error") {
             setSubjects(res);
@@ -59,7 +75,7 @@ export default function GenerateReport() {
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res !== "error") {
             setSubjectId(res[0].subject_id);
@@ -99,7 +115,7 @@ export default function GenerateReport() {
             semester: document.getElementsByClassName('inputitem')[4].value,
             subject_id: subjectId,
         }
-        console.log("hey");
+        // console.log("hey");
 
         let res = await fetch('http://localhost:4000/fetchprogramidforreport', {
             method: 'POST',
@@ -111,7 +127,7 @@ export default function GenerateReport() {
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
         if (res.msg === "notfound") {
             errele[0].innerHTML = "Data does not exit !"
             errele[0].style.color = "red";
@@ -215,9 +231,11 @@ export default function GenerateReport() {
                                 elements[4].disabled = false;
                             }}>
                                 <option value="Select...">Select...</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
+                                {divs.map((item, index) => (
+                                    <>
+                                        {index < division ? <option value={item}>{item}</option> : null}
+                                    </>
+                                ))}
                             </select>
                         </div>
                         <div className="selectprograminputitem">
@@ -228,18 +246,16 @@ export default function GenerateReport() {
                                 fetchSubjects(e)
                             }}>
                                 <option value="Select...">Select...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
+                                {sems.map((item, index) => (
+                                    <>
+                                        {item <= semester ? <option value={item}>{item}</option> : null}
+                                    </>
+                                ))}
                             </select>
                         </div>
                         <div className="selectprograminputitem">
                             <p>Subject Name</p>
                             <select disabled className='inputitem ddinputitem' onChange={(e) => {
-                                let elements = document.getElementsByClassName('inputitem');
                                 fetchSubjectId(e)
                             }}>
                                 <option value="Select...">Select...</option>

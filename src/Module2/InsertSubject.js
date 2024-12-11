@@ -24,22 +24,38 @@ export default function InsertSubject() {
 
         res = await res.json();
 
-        console.log(res);
+        // console.log(res);
         setSubjects(res);
 
     }
 
     const fetchCourseId = async (e) => {
+        setSubjects([]);
+        // console.log(e.target.value);
         let res = await fetch(`http://localhost:4000/fetchcourseid/${e.target.value}`, {
             method: 'GET'
         });
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res !== "error") {
             setCourseId(res[0].course_id);
+            fetchsemanddiv(res[0].course_id);
         }
+    }
+
+
+    const [semester, setSemester] = useState([]);
+    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const fetchsemanddiv = async (courseid) => {
+        let res = await fetch(`http://localhost:4000/fetchsemanddiv/${courseid}`, {
+            method: 'GET'
+        })
+
+        res = await res.json();
+        // console.log(res);
+        setSemester(res.data[0].no_of_semester);
     }
 
     const validateinputs = () => {
@@ -72,7 +88,7 @@ export default function InsertSubject() {
             method: 'GET',
         });
         res = await res.json();
-        console.log(res);
+        // console.log(res);
         if (res.msg === "subjectinserted") {
             errormsg[0].innerHTML = "Subject Inserted Successfully";
             errormsg[0].style.color = "green";
@@ -84,13 +100,13 @@ export default function InsertSubject() {
     }
 
     const deletesubject = async (index, e) => {
-        console.log(subject[index]);
+        // console.log(subject[index]);
         let res = await fetch(`http://localhost:4000/deletesubject/${subject[index].subject_id}`, {
             method: 'GET'
         })
 
         res = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res.msg === "subjectdeleted") {
             fetchsubjects();
@@ -99,7 +115,7 @@ export default function InsertSubject() {
 
     const validatefiltersubject = () => {
         let element = document.getElementsByClassName('ddinputitem');
-        console.log(element[2].value);
+        // console.log(element[2].value);
         if (element[2].value !== "Select...") {
             filterbycourses();
         }
@@ -108,18 +124,15 @@ export default function InsertSubject() {
 
     const filterbycourses = async () => {
         let element = document.getElementsByClassName('ddinputitem');
-
         let res = await fetch(`http://localhost:4000/filterbycourses/${courseId}/${element[3].value}`, {
             method: 'GET'
         })
-
         res = await res.json();
-        console.log(res);
+        // console.log(res);
         if (res.msg === "filtersfetched") {
             setSubjects(res.data);
         }
     }
-
     useEffect(() => {
         fetchcourses();
         fetchsubjects();
@@ -149,12 +162,11 @@ export default function InsertSubject() {
                                 <p>Semester </p>
                                 <select className='inputitem ddinputitem addsubjectitem' onChange={(e) => { }}>
                                     <option value="Select...">Select...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                                    {sems.map((item, index) => (
+                                        <>
+                                            {item <= semester ? <option value={item}>{item}</option> : null}
+                                        </>
+                                    ))}
                                 </select>
                             </div>
                             <div className="selectprograminputitem">

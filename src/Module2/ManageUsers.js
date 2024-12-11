@@ -8,7 +8,7 @@ export default function ManageUsers() {
     const element1 = document.getElementsByClassName('userid');
     const element2 = document.getElementsByClassName('password');
     const errormsg = document.getElementsByClassName('usererrormsg');
-    console.log(element1[0].value);
+    // console.log(element1[0].value);
     let errcount = 0;
 
     if (element1[0].value === "") {
@@ -38,7 +38,7 @@ export default function ManageUsers() {
       method: 'GET',
     });
     res = await res.json();
-    console.log(res.msg);
+    // console.log(res.msg);
     if (res.msg === "newuser") {
       insertuserdetail();
     } else {
@@ -63,7 +63,7 @@ export default function ManageUsers() {
       },
     });
     res = await res.json();
-    console.log(res);
+    // console.log(res);
     if (res.msg === "insertedsuccesfully") {
       errormsg[0].style.color = "green";
       errormsg[0].innerHTML = "User Added Successfully";
@@ -73,7 +73,7 @@ export default function ManageUsers() {
   }
 
   const fetchusertabledetails = async () => {
-    console.log("users fetched");
+    // console.log("users fetched");
     let res = await fetch('http://localhost:4000/fetchusers', {
       method: 'GET',
     });
@@ -84,14 +84,14 @@ export default function ManageUsers() {
   }
 
   const deleteuser = async (index) => {
-    console.log(users[index].user_name);
+    // console.log(users[index].user_name);
     let res = await fetch(`http://localhost:4000/deleteuser/${users[index].user_name}`, {
       method: 'GET',
     });
     res = await res.json();
     // console.log(res);
     if (res.msg === "userdeleted") {
-      console.log("deleted");
+      // console.log("deleted");
 
       fetchusertabledetails();
       // setUsers(res.data)

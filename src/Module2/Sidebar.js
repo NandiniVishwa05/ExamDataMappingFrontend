@@ -2,19 +2,11 @@ import React, { useEffect } from 'react'
 import './Css/Sidebar.css'
 import './Css/InsertMarks.css'
 import img from './Resources/DAV logo.jpeg'
-import Insertmarks from './Insertmarks'
-import GenerateReport from './GenerateReport'
 import { Link, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 export default function Sidebar() {
   const adminval = useSelector((state) => state.counterSlice.adminValue)
-
-  useEffect(() => {
-    console.log("Sidebar Loaded");
-    // console.log(adminval);
-
-  }, [])
 
   return (
     <>
@@ -33,7 +25,7 @@ export default function Sidebar() {
             <div className="sidebarbodysection">
               <div className="sidebaroptionslist">
                 <Link to='/dashboard/insertprogram' className="sidebaroptionitem">
-                  <i className="fa-solid fa-plus"></i>
+                  <i className="fa-solid fa-paperclip"></i>
                   <p>Insert Program</p>
                 </Link>
                 <Link to='/dashboard/insertmarks' className="sidebaroptionitem">
@@ -45,17 +37,22 @@ export default function Sidebar() {
                   <p>Generate Report</p>
                 </Link>
                 {
+                  // eslint-disable-next-line
                   adminval == 1 ?
                     <>
                       <Link to='/dashboard/insertsubject' className="sidebaroptionitem">
-                        <i className="fa-solid fa-plus"></i>
-                        <p>Insert Subject</p>
+                        <i className="fa-solid fa-book"></i>
+                        <p>Manage Subject</p>
                       </Link>
                       <Link to='/dashboard/manageusers' className="sidebaroptionitem">
-                        <i className="fa-solid fa-plus"></i>
+                        <i className="fa-regular fa-user"></i>
                         <p>Manage Users</p>
                       </Link>
-                    </>:
+                      <Link to='/dashboard/manageprogram' className="sidebaroptionitem">
+                        <i className="fa-solid fa-layer-group"></i>
+                        <p>Manage Program</p>
+                      </Link>
+                    </> :
                     <></>
                 }
                 <Link to='/' className="sidebaroptionitem">
@@ -67,8 +64,6 @@ export default function Sidebar() {
           </div>
         </div>
         <Outlet />
-        {/* <Insertmarks /> */}
-        {/* <GenerateReport /> */}
       </div>
     </>
   )

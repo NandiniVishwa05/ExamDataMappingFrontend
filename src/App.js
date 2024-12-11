@@ -6,6 +6,7 @@ import InsertStudentMarks from "./Module2/InsertStudentMarks";
 import Insertsubject from "./Module2/InsertSubject";
 import ManageUsers from "./Module2/ManageUsers";
 import Sidebar from './Module2/Sidebar'
+import ManageProgram from "./Module2/ManageProgram";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path='/dashboard/insertmarks' element={< InsertStudentMarks />} />
             <Route path='/dashboard/generatereport' element={< GenerateReport />} />
             <Route path='/dashboard/manageusers' element={<ManageUsers />} />
+            <Route path='/dashboard/manageprogram' element={<ManageProgram />} />
           </Route>
         </Routes>
       </BrowserRouter>
