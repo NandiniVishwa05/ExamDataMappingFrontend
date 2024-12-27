@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function Insertmarks() {
     const [courses, setCourses] = useState([]);
@@ -6,16 +7,19 @@ export default function Insertmarks() {
     const [courseId, setCourseId] = useState();
     const [subjectId, setSubjectId] = useState();
     const [programId, setProgramId] = useState();
-
+    const navigate = useNavigate();
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:8800/fetchcourses`, {
+        let res = await fetch(`http://localhost:3443/fetchcourses`, {
             method: 'GET',
-            credentials:'include'
+            credentials: 'include'
         });
 
         res = await res.json();
-
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
         if (res !== "error") {
             setCourses(res);
         }
@@ -26,11 +30,16 @@ export default function Insertmarks() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        let res = await fetch(`http://localhost:8800/fetchcourseid/${e.target.value}`, {
-            method: 'GET'
-        });
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+            method: 'GET',
+            credentials: 'include'
 
+        });
         res = await res.json();
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
 
         if (res !== "error") {
             setCourseId(res[0].course_id);
@@ -44,21 +53,31 @@ export default function Insertmarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:8800/fetchsemanddiv/${courseid}`, {
-            method: 'GET'
-        })
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+            method: 'GET',
+            credentials: 'include'
 
+        })
         res = await res.json();
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
         setSemester(res.data[0].no_of_semester);
         setDivision(res.data[0].no_of_division);
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:8800/fetchsubjects/${courseId}/${e.target.value}`, {
-            method: 'GET'
-        });
+        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+            method: 'GET',
+            credentials: 'include'
 
+        });
         res = await res.json();
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
 
         if (res !== "error") {
             setSubjects(res);
@@ -66,11 +85,16 @@ export default function Insertmarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:8800/fetchsubjectid/${e.target.value}`, {
-            method: 'GET'
-        });
+        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
+            method: 'GET',
+            credentials: 'include'
 
+        });
         res = await res.json();
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
         // console.log(res);
 
         if (res !== "error") {
@@ -116,17 +140,21 @@ export default function Insertmarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:8800/fetchprogramid', {
+        let res = await fetch('http://localhost:3443/fetchprogramid', {
             method: 'POST',
+            credentials: 'include',
+
             body: JSON.stringify(data),
             headers: {
                 Accept: "application/json",
                 "Content-type": "application/json",
             },
         });
-
         res = await res.json();
-        // console.log(res);
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
 
         if (res.msg === "found") {
             document.querySelector('.overlay').style.display = "flex";
@@ -134,8 +162,9 @@ export default function Insertmarks() {
             setProgramId(res.data[0].program_id);
             // programid = res.data[0].program_id;
         } else if (res.msg === "notfound") {
-            let res = await fetch('http://localhost:8800/insertprogramdata', {
+            let res = await fetch('http://localhost:3443/insertprogramdata', {
                 method: 'POST',
+                credentials: 'include',
                 body: JSON.stringify(data),
                 headers: {
                     Accept: "application/json",
@@ -143,6 +172,10 @@ export default function Insertmarks() {
                 },
             });
             res = await res.json();
+            if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+                navigate('/');
+                return;
+            }
             if (res.msg === "Inserted") {
                 let errormsg = document.querySelector('.selectprogramerrormsgitem');
                 errormsg.style.color = "Green"
@@ -164,8 +197,9 @@ export default function Insertmarks() {
             subject_code: document.getElementsByClassName('inputitem')[6].value,
             faculty_name: document.getElementsByClassName('inputitem')[7].value
         }
-        let res = await fetch('http://localhost:8800/overrideprogramdata', {
+        let res = await fetch('http://localhost:3443/overrideprogramdata', {
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(data),
             headers: {
                 Accept: "application/json",
@@ -173,6 +207,10 @@ export default function Insertmarks() {
             },
         });
         res = await res.json();
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
         if (res.msg === "Inserted") {
             let errormsg = document.querySelector('.selectprogramerrormsgitem');
             errormsg.style.color = "Green"
@@ -229,8 +267,9 @@ export default function Insertmarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://localhost:8800/insertmarksdetail', {
+        let res = await fetch('http://localhost:3443/insertmarksdetail', {
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(data),
             headers: {
                 Accept: "application/json",
@@ -238,7 +277,10 @@ export default function Insertmarks() {
             },
         });
         res = await res.json();
-        // console.log(res);
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
         if (res.msg === "Inserted marks") {
             let elements = document.getElementsByClassName('qitem');
             for (let i = 0; i < elements.length; i++) {

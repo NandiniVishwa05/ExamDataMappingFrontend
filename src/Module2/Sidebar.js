@@ -1,13 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Css/Sidebar.css'
 import './Css/InsertMarks.css'
 import img from './Resources/DAV logo.jpeg'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 export default function Sidebar() {
-  const adminval = useSelector((state) => state.counterSlice.adminValue)
+  const navigate = useNavigate();
+  const [adminVal, setAdminVal] = useState(0);
+  // const adminval = useSelector((state) => state.counterSlice.adminValue)
+  const logout = async () => {
+    let res = await fetch('http://localhost:3443/logout', {
+      credentials: 'include',
+      method: 'GET'
+    })
+    res = await res.json();
+    if (res.msg === "LoggedOut") {
+      navigate("/");
+    }
+  }
 
+  const fetchUserType = async () => {
+    console.log("function");
+
+    let res = await fetch('http://localhost:3443/fetchusertype', {
+      method: 'GET',
+      credentials: 'include'
+    })
+
+    res = await res.json();
+    console.log(res);
+    // eslint-disable-next-line
+    if (res[0].admin_check == 1) {
+      setAdminVal(1);
+    } else {
+      setAdminVal(0);
+    }
+  }
+
+  useEffect(() => {
+    fetchUserType();
+  }, [])
   return (
     <>
       <div className="sidebarparentcontainer">
@@ -38,7 +71,7 @@ export default function Sidebar() {
                 </Link>
                 {
                   // eslint-disable-next-line
-                  adminval == 1 ?
+                  adminVal == 1 ?
                     <>
                       <Link to='/dashboard/insertsubject' className="sidebaroptionitem">
                         <i className="fa-solid fa-book"></i>
@@ -52,10 +85,9 @@ export default function Sidebar() {
                         <i className="fa-solid fa-layer-group"></i>
                         <p>Manage Program</p>
                       </Link>
-                    </> :
-                    <></>
+                    </> : null
                 }
-                <Link to='/' className="sidebaroptionitem">
+                <Link to='/' className="sidebaroptionitem" onClick={logout}>
                   <i className="fa-solid fa-right-from-bracket"></i>
                   <p >Logout</p>
                 </Link>

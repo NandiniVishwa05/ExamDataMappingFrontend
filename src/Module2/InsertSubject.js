@@ -1,29 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import './Css/Insertsubject.css'
+import { useNavigate } from 'react-router-dom';
 export default function InsertSubject() {
 
     const [courses, setCourses] = useState([]);
     const [courseId, setCourseId] = useState();
     const [subject, setSubjects] = useState([]);
+    const navigate = useNavigate()
+
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:8800/fetchcourses`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchcourses`, {
+            method: 'GET',
+            credentials: 'include'
+
         });
 
         res = await res.json();
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res !== "error") {
             setCourses(res);
         }
     }
 
     const fetchsubjects = async () => {
-        let res = await fetch('http://localhost:8800/fetchsubjects', {
-            method: 'GET'
+        let res = await fetch('http://localhost:3443/fetchsubjects', {
+            method: 'GET',
+            credentials: 'include'
         });
 
         res = await res.json();
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         // console.log(res);
         setSubjects(res);
 
@@ -32,13 +44,18 @@ export default function InsertSubject() {
     const fetchCourseId = async (e) => {
         setSubjects([]);
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:8800/fetchcourseid/${e.target.value}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+            method: 'GET',
+            credentials: 'include'
+
         });
 
         res = await res.json();
         // console.log(res);
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res !== "error") {
             setCourseId(res[0].course_id);
             fetchsemanddiv(res[0].course_id);
@@ -49,11 +66,17 @@ export default function InsertSubject() {
     const [semester, setSemester] = useState([]);
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:8800/fetchsemanddiv/${courseid}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+            method: 'GET',
+            credentials: 'include'
+
         })
 
         res = await res.json();
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         // console.log(res);
         setSemester(res.data[0].no_of_semester);
     }
@@ -84,11 +107,16 @@ export default function InsertSubject() {
 
     const checksubject = async () => {
         let errormsg = document.getElementsByClassName('selectprogramerrormsgitem');
-        let res = await fetch(`http://localhost:8800/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
+        let res = await fetch(`http://localhost:3443/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
             method: 'GET',
+            credentials: 'include'
         });
         res = await res.json();
         // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res.msg === "subjectinserted") {
             errormsg[0].innerHTML = "Subject Inserted Successfully";
             errormsg[0].style.color = "green";
@@ -101,13 +129,18 @@ export default function InsertSubject() {
 
     const deletesubject = async (index, e) => {
         // console.log(subject[index]);
-        let res = await fetch(`http://localhost:8800/deletesubject/${subject[index].subject_id}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/deletesubject/${subject[index].subject_id}`, {
+            method: 'GET',
+            credentials: 'include'
+
         })
 
         res = await res.json();
         // console.log(res);
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res.msg === "subjectdeleted") {
             fetchsubjects();
         }
@@ -124,11 +157,17 @@ export default function InsertSubject() {
 
     const filterbycourses = async () => {
         let element = document.getElementsByClassName('ddinputitem');
-        let res = await fetch(`http://localhost:8800/filterbycourses/${courseId}/${element[3].value}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/filterbycourses/${courseId}/${element[3].value}`, {
+            method: 'GET',
+            credentials: 'include'
+
         })
         res = await res.json();
         // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res.msg === "filtersfetched") {
             setSubjects(res.data);
         }

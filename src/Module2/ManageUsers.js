@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './Css/ManageUsers.css'
+import { useNavigate } from 'react-router-dom';
 export default function ManageUsers() {
 
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate()
 
   const validateuserdetails = () => {
     const element1 = document.getElementsByClassName('userid');
@@ -34,11 +36,17 @@ export default function ManageUsers() {
   const checkuserdetails = async () => {
     const element1 = document.getElementsByClassName('userid');
     const errormsg = document.getElementsByClassName('usererrormsg');
-    let res = await fetch(`http://localhost:8800/fetchuserdetails/${element1[0].value}`, {
+    let res = await fetch(`http://localhost:3443/fetchuserdetails/${element1[0].value}`, {
       method: 'GET',
+      credentials: 'include'
+
     });
     res = await res.json();
     // console.log(res.msg);
+    if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+      navigate('/');
+      return;
+    }
     if (res.msg === "newuser") {
       insertuserdetail();
     } else {
@@ -54,8 +62,9 @@ export default function ManageUsers() {
       userid: element1[0].value,
       userpassword: element2[0].value
     }
-    let res = await fetch('http://localhost:8800/insertuserdetail', {
+    let res = await fetch('http://localhost:3443/insertuserdetail', {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify(data),
       headers: {
         Accept: "application/json",
@@ -63,6 +72,10 @@ export default function ManageUsers() {
       },
     });
     res = await res.json();
+    if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+      navigate('/');
+      return;
+    }
     // console.log(res);
     if (res.msg === "insertedsuccesfully") {
       errormsg[0].style.color = "green";
@@ -74,10 +87,16 @@ export default function ManageUsers() {
 
   const fetchusertabledetails = async () => {
     // console.log("users fetched");
-    let res = await fetch('http://localhost:8800/fetchusers', {
+    let res = await fetch('http://localhost:3443/fetchusers', {
       method: 'GET',
+      credentials: 'include'
+
     });
     res = await res.json();
+    if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+      navigate('/');
+      return;
+    }
     if (res.msg == "usersfetched") {
       setUsers(res.data)
     }
@@ -85,10 +104,16 @@ export default function ManageUsers() {
 
   const deleteuser = async (index) => {
     // console.log(users[index].user_name);
-    let res = await fetch(`http://localhost:8800/deleteuser/${users[index].user_name}`, {
+    let res = await fetch(`http://localhost:3443/deleteuser/${users[index].user_name}`, {
       method: 'GET',
+      credentials: 'include'
+
     });
     res = await res.json();
+    if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+      navigate('/');
+      return;
+    }
     // console.log(res);
     if (res.msg === "userdeleted") {
       // console.log("deleted");

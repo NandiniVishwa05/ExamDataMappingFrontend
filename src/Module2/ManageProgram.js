@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function ManageProgram() {
     const [course, setCourses] = useState([]);
+    const navigate = useNavigate()
+
     const validateprograminput = () => {
         let element = document.getElementsByClassName('addsubjectitem');
         const errormsg = document.getElementsByClassName('qerrormsg');
@@ -49,8 +52,10 @@ export default function ManageProgram() {
             no_of_semester: element[1].value,
             no_of_division: element[2].value
         }
-        let res = await fetch('http://localhost:8800/insertadminprogramdetail', {
+        let res = await fetch('http://localhost:3443/insertadminprogramdetail', {
             method: 'POST',
+            credentials:'include',
+
             body: JSON.stringify(data),
             headers: {
                 Accept: "application/json",
@@ -59,30 +64,45 @@ export default function ManageProgram() {
         });
         res = await res.json();
         // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res.msg === "insertedsuccesfully") {
             fetchadminprogramtabledetails();
         }
     }
 
     const fetchadminprogramtabledetails = async () => {
-        let res = await fetch(`http://localhost:8800/fetchadminprogramtabledetails`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchadminprogramtabledetails`, {
+            method: 'GET',
+            credentials:'include'
+
         });
 
         res = await res.json();
         // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res.msg !== "error") {
             setCourses(res.msg);
         }
 
     }
     const deleteadmintableprogramdetail = async (index) => {
-        let res = await fetch(`http://localhost:8800/deleteadmintableprogramdetail/${course[index].course_id}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/deleteadmintableprogramdetail/${course[index].course_id}`, {
+            method: 'GET',
+            credentials:'include'
+
         })
 
         res = await res.json();
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         fetchadminprogramtabledetails();
     }
 

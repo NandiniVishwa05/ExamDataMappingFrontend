@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function InsertStudentMarks() {
 
@@ -8,13 +9,19 @@ export default function InsertStudentMarks() {
     const [subjectId, setSubjectId] = useState();
     const [programId, setProgramId] = useState();
 
+    const navigate = useNavigate
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:8800/fetchcourses`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchcourses`, {
+            method: 'GET',
+            credentials:'include'
         })
         res = await res.json();
         // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res !== "error") {
             setCourses(res);
         }
@@ -26,13 +33,18 @@ export default function InsertStudentMarks() {
         elements[5].disabled = true;
         elements[4].value = "Select...";
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:8800/fetchcourseid/${e.target.value}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+            method: 'GET',
+            credentials:'include'
+
         });
 
         res = await res.json();
         // console.log(res);
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res !== "error") {
             setCourseId(res[0].course_id);
             fetchsemanddiv(res[0].course_id);
@@ -44,19 +56,27 @@ export default function InsertStudentMarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:8800/fetchsemanddiv/${courseid}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+            method: 'GET',
+            credentials:'include'
+
         })
 
         res = await res.json();
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         // console.log(res);
         setSemester(res.data[0].no_of_semester);
         setDivision(res.data[0].no_of_division);
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:8800/fetchsubjects/${courseId}/${e.target.value}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+            method: 'GET',
+            credentials:'include'
+
         });
 
         res = await res.json();
@@ -68,13 +88,18 @@ export default function InsertStudentMarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:8800/fetchsubjectid/${e.target.value}`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
+            method: 'GET',
+            credentials:'include'
+
         });
 
         res = await res.json();
         // console.log(res);
-
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res !== "error") {
             setSubjectId(res[0].subject_id);
         }
@@ -114,8 +139,9 @@ export default function InsertStudentMarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:8800/fetchprogramidforreport', {
+        let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
             method: 'POST',
+            credentials:'include',
             body: JSON.stringify(data),
             headers: {
                 Accept: "application/json",
@@ -124,7 +150,10 @@ export default function InsertStudentMarks() {
         });
 
         res = await res.json();
-        // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        } // console.log(res);
         if (res.msg === "notfound") {
             errele[0].innerHTML = "Data does not exit !"
             errele[0].style.color = "red";
@@ -196,8 +225,9 @@ export default function InsertStudentMarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://localhost:8800/insertmarksdetail', {
+        let res = await fetch('http://localhost:3443/insertmarksdetail', {
             method: 'POST',
+            credentials:'include',
             body: JSON.stringify(data),
             headers: {
                 Accept: "application/json",
@@ -206,6 +236,10 @@ export default function InsertStudentMarks() {
         });
         res = await res.json();
         // console.log(res);
+        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+            navigate('/');
+            return;
+        }
         if (res.msg === "Inserted marks") {
             let elements = document.getElementsByClassName('qitem');
             for (let i = 0; i < elements.length; i++) {
