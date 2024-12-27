@@ -9,8 +9,9 @@ export default function Insertmarks() {
 
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:4000/fetchcourses`, {
-            method: 'GET'
+        let res = await fetch(`http://localhost:8800/fetchcourses`, {
+            method: 'GET',
+            credentials:'include'
         });
 
         res = await res.json();
@@ -25,7 +26,7 @@ export default function Insertmarks() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        let res = await fetch(`http://localhost:4000/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchcourseid/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -43,7 +44,7 @@ export default function Insertmarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:4000/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://localhost:8800/fetchsemanddiv/${courseid}`, {
             method: 'GET'
         })
 
@@ -53,7 +54,7 @@ export default function Insertmarks() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:4000/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -65,7 +66,7 @@ export default function Insertmarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:4000/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchsubjectid/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -115,7 +116,7 @@ export default function Insertmarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:4000/fetchprogramid', {
+        let res = await fetch('http://localhost:8800/fetchprogramid', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -133,7 +134,7 @@ export default function Insertmarks() {
             setProgramId(res.data[0].program_id);
             // programid = res.data[0].program_id;
         } else if (res.msg === "notfound") {
-            let res = await fetch('http://localhost:4000/insertprogramdata', {
+            let res = await fetch('http://localhost:8800/insertprogramdata', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
@@ -163,7 +164,7 @@ export default function Insertmarks() {
             subject_code: document.getElementsByClassName('inputitem')[6].value,
             faculty_name: document.getElementsByClassName('inputitem')[7].value
         }
-        let res = await fetch('http://localhost:4000/overrideprogramdata', {
+        let res = await fetch('http://localhost:8800/overrideprogramdata', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -228,7 +229,7 @@ export default function Insertmarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://localhost:4000/insertmarksdetail', {
+        let res = await fetch('http://localhost:8800/insertmarksdetail', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

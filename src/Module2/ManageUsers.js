@@ -34,7 +34,7 @@ export default function ManageUsers() {
   const checkuserdetails = async () => {
     const element1 = document.getElementsByClassName('userid');
     const errormsg = document.getElementsByClassName('usererrormsg');
-    let res = await fetch(`http://localhost:4000/fetchuserdetails/${element1[0].value}`, {
+    let res = await fetch(`http://localhost:8800/fetchuserdetails/${element1[0].value}`, {
       method: 'GET',
     });
     res = await res.json();
@@ -54,7 +54,7 @@ export default function ManageUsers() {
       userid: element1[0].value,
       userpassword: element2[0].value
     }
-    let res = await fetch('http://localhost:4000/insertuserdetail', {
+    let res = await fetch('http://localhost:8800/insertuserdetail', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -74,7 +74,7 @@ export default function ManageUsers() {
 
   const fetchusertabledetails = async () => {
     // console.log("users fetched");
-    let res = await fetch('http://localhost:4000/fetchusers', {
+    let res = await fetch('http://localhost:8800/fetchusers', {
       method: 'GET',
     });
     res = await res.json();
@@ -85,7 +85,7 @@ export default function ManageUsers() {
 
   const deleteuser = async (index) => {
     // console.log(users[index].user_name);
-    let res = await fetch(`http://localhost:4000/deleteuser/${users[index].user_name}`, {
+    let res = await fetch(`http://localhost:8800/deleteuser/${users[index].user_name}`, {
       method: 'GET',
     });
     res = await res.json();

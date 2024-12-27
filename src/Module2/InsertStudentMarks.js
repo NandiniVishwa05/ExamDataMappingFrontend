@@ -10,7 +10,7 @@ export default function InsertStudentMarks() {
 
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:4000/fetchcourses`, {
+        let res = await fetch(`http://localhost:8800/fetchcourses`, {
             method: 'GET'
         })
         res = await res.json();
@@ -26,7 +26,7 @@ export default function InsertStudentMarks() {
         elements[5].disabled = true;
         elements[4].value = "Select...";
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:4000/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchcourseid/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -44,7 +44,7 @@ export default function InsertStudentMarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:4000/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://localhost:8800/fetchsemanddiv/${courseid}`, {
             method: 'GET'
         })
 
@@ -55,7 +55,7 @@ export default function InsertStudentMarks() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:4000/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -68,7 +68,7 @@ export default function InsertStudentMarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:4000/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchsubjectid/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -114,7 +114,7 @@ export default function InsertStudentMarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:4000/fetchprogramidforreport', {
+        let res = await fetch('http://localhost:8800/fetchprogramidforreport', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -196,7 +196,7 @@ export default function InsertStudentMarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://localhost:4000/insertmarksdetail', {
+        let res = await fetch('http://localhost:8800/insertmarksdetail', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

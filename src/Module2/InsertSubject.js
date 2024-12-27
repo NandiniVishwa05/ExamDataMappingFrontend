@@ -6,7 +6,7 @@ export default function InsertSubject() {
     const [courseId, setCourseId] = useState();
     const [subject, setSubjects] = useState([]);
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:4000/fetchcourses`, {
+        let res = await fetch(`http://localhost:8800/fetchcourses`, {
             method: 'GET'
         });
 
@@ -18,7 +18,7 @@ export default function InsertSubject() {
     }
 
     const fetchsubjects = async () => {
-        let res = await fetch('http://localhost:4000/fetchsubjects', {
+        let res = await fetch('http://localhost:8800/fetchsubjects', {
             method: 'GET'
         });
 
@@ -32,7 +32,7 @@ export default function InsertSubject() {
     const fetchCourseId = async (e) => {
         setSubjects([]);
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:4000/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:8800/fetchcourseid/${e.target.value}`, {
             method: 'GET'
         });
 
@@ -49,7 +49,7 @@ export default function InsertSubject() {
     const [semester, setSemester] = useState([]);
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:4000/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://localhost:8800/fetchsemanddiv/${courseid}`, {
             method: 'GET'
         })
 
@@ -84,7 +84,7 @@ export default function InsertSubject() {
 
     const checksubject = async () => {
         let errormsg = document.getElementsByClassName('selectprogramerrormsgitem');
-        let res = await fetch(`http://localhost:4000/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
+        let res = await fetch(`http://localhost:8800/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
             method: 'GET',
         });
         res = await res.json();
@@ -101,7 +101,7 @@ export default function InsertSubject() {
 
     const deletesubject = async (index, e) => {
         // console.log(subject[index]);
-        let res = await fetch(`http://localhost:4000/deletesubject/${subject[index].subject_id}`, {
+        let res = await fetch(`http://localhost:8800/deletesubject/${subject[index].subject_id}`, {
             method: 'GET'
         })
 
@@ -124,7 +124,7 @@ export default function InsertSubject() {
 
     const filterbycourses = async () => {
         let element = document.getElementsByClassName('ddinputitem');
-        let res = await fetch(`http://localhost:4000/filterbycourses/${courseId}/${element[3].value}`, {
+        let res = await fetch(`http://localhost:8800/filterbycourses/${courseId}/${element[3].value}`, {
             method: 'GET'
         })
         res = await res.json();
