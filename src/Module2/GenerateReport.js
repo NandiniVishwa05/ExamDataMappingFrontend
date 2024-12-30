@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './Css/GenerateReport.css'
 import * as XLSX from 'xlsx';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +19,7 @@ export default function GenerateReport() {
         })
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -40,7 +40,7 @@ export default function GenerateReport() {
 
         });
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -64,7 +64,7 @@ export default function GenerateReport() {
 
         })
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -75,12 +75,12 @@ export default function GenerateReport() {
 
     const fetchSubjects = async (e) => {
         let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
-            method: 'GET', 
+            method: 'GET',
             credentials: 'include'
 
         });
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -94,11 +94,11 @@ export default function GenerateReport() {
     const fetchSubjectId = async (e) => {
         let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
             method: 'GET',
-            credentials:'include'
+            credentials: 'include'
 
         });
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -146,7 +146,7 @@ export default function GenerateReport() {
 
         let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
             method: 'POST',
-            credentials:'include',
+            credentials: 'include',
 
             body: JSON.stringify(data),
             headers: {
@@ -155,7 +155,7 @@ export default function GenerateReport() {
             },
         });
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -208,6 +208,13 @@ export default function GenerateReport() {
             console.error("Error fetching data:", error);
         }
     }
+
+    useEffect(() => {
+        let ele = document.getElementsByClassName('sidebarmaincontainer')[0]
+        if (ele.classList.contains('sidebaractive')) {
+            ele.classList.remove('sidebaractive')
+        }
+    }, [])
 
     return (
         <div className="insertmarkmodulesmaincontainer">

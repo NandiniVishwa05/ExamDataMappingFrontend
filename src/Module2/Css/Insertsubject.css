@@ -1,30 +1,35 @@
 .insertsubjectmaincontainer {
     width: 80vw;
 }
+
 /* .selectsubjectcontainerheader{
     padding;
 } */
-.insertsubjecttheader{
+.insertsubjecttheader {
     font-size: 2rem;
     font-weight: 600;
 
 }
-.selectsubjectcontainer{
+
+.selectsubjectcontainer {
     display: flex;
     justify-content: center;
     flex-direction: column;
     gap: 2vw;
 }
+
 .insertsubjectchildcontainer {
     /* border: 1px solid red; */
     padding: 2vh 2vw;
 
 }
-.selectsubjectcontainerinputlist{
+
+.selectsubjectcontainerinputlist {
     display: flex;
     gap: 5vw;
 }
-.insertsubjectdetailsinputbtn{
+
+.insertsubjectdetailsinputbtn {
     padding: 1vh 2vw;
     font-size: 1rem;
     background-color: rgb(0, 0, 120);
@@ -32,44 +37,50 @@
     cursor: pointer;
     transition: .3s;
 }
-.selectprograminputitem{
+
+.selectprograminputitem {
     /* border: 1px solid red; */
     display: flex;
     align-items: center;
 }
-.insertsubjectfiltersectioninputdiv{
+
+.insertsubjectfiltersectioninputdiv {
     display: flex;
-    gap:5vw;
+    gap: 5vw;
 }
-.insertsubjectfiltersectionheader{
+
+.insertsubjectfiltersectionheader {
     font-size: 2rem;
     font-weight: 600;
 }
-.insertsubjectaddfiltersectioncontainer{
+
+.insertsubjectaddfiltersectioncontainer {
     display: flex;
     flex-direction: column;
     gap: 4vh;
 }
-.insertsubjectfiltertablecontainer{
+
+.insertsubjectfiltertablecontainer {
     height: 61vh;
     overflow-y: scroll;
     /* border:1px solid red; */
 }
 
-.insertsubjectfiltertablecontainer table th{
+.insertsubjectfiltertablecontainer table th {
     width: 5%;
-    border:1px solid rgb(160, 160, 160);
+    border: 1px solid rgb(160, 160, 160);
     background-color: rgb(0, 0, 120);
     color: white;
     padding: 1.5vh 0vw;
 }
 
-.insertsubjectfiltertablecontainer table td{
+.insertsubjectfiltertablecontainer table td {
     text-align: center;
-    border:1px solid rgb(160, 160, 160);
+    border: 1px solid rgb(160, 160, 160);
     padding: 1vh 0vw;
 }
-.deletebtn{
+
+.deletebtn {
     padding: .8vh 1vw;
     font-size: 1rem;
     background-color: rgb(0, 0, 120);
@@ -78,3 +89,41 @@
     transition: .3s;
 }
 
+
+@media only screen and (max-width: 800px) {
+    .insertsubjectmaincontainer {
+        width: 100vw;
+        margin-top: 9vh;
+    }
+
+    .insertsubjectchildcontainer {
+        padding: 2vh 4vw;
+    }
+
+    .selectsubjectcontainerinputlist {
+        padding-top: 2vh;
+        flex-direction: column;
+    }
+
+    .insertsubjectdetailsinputbtn {
+        padding: 1vh 8vw;
+    }
+
+    .insertsubjectaddfiltersectioncontainer {
+        gap: 2vh;
+        margin: 2vh 0;
+    }
+
+    .insertsubjectfiltersectioninputdiv {
+        flex-direction: column;
+        gap: 2vh;
+    }
+
+    .insertsubjectfiltertablecontainer {
+        height: 41.3vh;
+    }
+
+    .manageprogramtable {
+        height: 62vh;
+    }
+}

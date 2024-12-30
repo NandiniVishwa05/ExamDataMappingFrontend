@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 export default function Sidebar() {
   const navigate = useNavigate();
   const [adminVal, setAdminVal] = useState(0);
-  // const adminval = useSelector((state) => state.counterSlice.adminValue)
+
   const logout = async () => {
     let res = await fetch('http://localhost:3443/logout', {
       credentials: 'include',
@@ -38,14 +38,43 @@ export default function Sidebar() {
     }
   }
 
+  const toggleSidebar = () => {
+    let ele = document.getElementsByClassName('sidebarmaincontainer')[0]
+    if (ele.classList.contains('sidebaractive')) {
+      ele.classList.remove('sidebaractive')
+    } else {
+      ele.classList.add('sidebaractive')
+    }
+  }
+
   useEffect(() => {
+    
     fetchUserType();
   }, [])
   return (
     <>
       <div className="sidebarparentcontainer">
+        <div className="navbarmaincontainer">
+          <div className='navbarchildcontainer'>
+            <div className='navbarinfosection'>
+              <div className="sidebarlogosection">
+                <img src={img} alt="" />
+              </div>
+              <div className="sidebarlabelsection">
+                <p className='sidebarlabelbold'>Ramanand Arya D.A.V College</p>
+                <p className='sidebarlabelsecondary'>( Autonomous )</p>
+              </div>
+            </div>
+            <div className='navbaroptionssection'>
+              <i className="fa-solid fa-bars" onClick={() => { toggleSidebar() }}></i>
+            </div>
+          </div>
+        </div>
         <div className='sidebarmaincontainer'>
           <div className="sidebarchildcontainer">
+            <div className="sidebarclosebutton" onClick={() => { toggleSidebar() }} >
+              <i className="fa-solid fa-angle-left"></i>
+            </div>
             <div className="sidebarheadsection">
               <div className="sidebarlogosection">
                 <img src={img} alt="" />

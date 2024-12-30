@@ -107,6 +107,10 @@ export default function ManageProgram() {
     }
 
     useEffect(() => {
+        let ele = document.getElementsByClassName('sidebarmaincontainer')[0]
+        if (ele.classList.contains('sidebaractive')) {
+            ele.classList.remove('sidebaractive')
+        }
         fetchadminprogramtabledetails();
     }, [])
     return (
@@ -148,7 +152,7 @@ export default function ManageProgram() {
                         <div className="insertsubjectfiltersectionheader">
                             <p>Program Details</p>
                         </div>
-                        <div className="insertsubjectfiltertablecontainer">
+                        <div className="insertsubjectfiltertablecontainer manageprogramtable">
                             <table  >
                                 <tr >
                                     <th>Sr no.</th>

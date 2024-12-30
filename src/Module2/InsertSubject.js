@@ -173,6 +173,10 @@ export default function InsertSubject() {
         }
     }
     useEffect(() => {
+        let ele = document.getElementsByClassName('sidebarmaincontainer')[0]
+        if (ele.classList.contains('sidebaractive')) {
+            ele.classList.remove('sidebaractive')
+        }
         fetchcourses();
         fetchsubjects();
     }, []);

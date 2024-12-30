@@ -119,7 +119,7 @@
     border-radius: 5px;
 }
 
-.overlay{
+.overlay {
     display: none;
     width: 100vw;
     height: 100vh;
@@ -137,15 +137,53 @@
     gap: 1vw;
 }
 
-.insertdatabtn{
+.insertdatabtn {
     font-size: 1.1rem;
 }
 
-.qerrormsg{
+.qerrormsg {
     display: flex;
     align-items: center;
 }
 
-.managecourseinputitem{
+.managecourseinputitem {
     padding-bottom: 0;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .insertmarkmodulesmaincontainer {
+        width: 100vw;
+        margin-top: 9vh;
+    }
+
+    .selectprogramheader {
+        padding: 2vh 4vw;
+    }
+
+    .selectprograminputlist {
+        padding: 1vh 4vw;
+        gap: 2vh;
+    }
+
+    .selectprograminputitem {
+        width: 100%;
+        padding-bottom: 0;
+    }
+
+    .selectprogramsubmitbtncontainer {
+        padding: 0% 4vw;
+    }
+
+    .selectprogramsubmitbtn {
+        padding: 1.2vh 10vw;
+    }
+
+    .selectprograminputrollnoitem {
+        justify-content: space-between;
+    }
+
+    .selectprograminputrollnoitem input {
+        width: 70%;
+    }
 }
