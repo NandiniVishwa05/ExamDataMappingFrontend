@@ -112,27 +112,32 @@
     justify-content: center;
 
 }
-.forgotpasswordcontainer .backbuttondiv{
+
+.forgotpasswordcontainer .backbuttondiv {
     color: blue;
     display: flex;
-    gap:.5vw;
+    gap: .5vw;
 }
-.forgotpasswordcontainer .backbtn{
+
+.forgotpasswordcontainer .backbtn {
     color: blue;
     font-size: 1.3rem;
 }
-.forgotemailcontainer .forgotemailcontainerbackbuttondiv{
+
+.forgotemailcontainer .forgotemailcontainerbackbuttondiv {
     color: blue;
     display: flex;
     position: absolute;
-    top:25%;
+    top: 25%;
     left: 39%;
-    gap:.5vw;
+    gap: .5vw;
 }
-.forgotemailcontainer .forgotemailcontainerbackbtn{
+
+.forgotemailcontainer .forgotemailcontainerbackbtn {
     color: blue;
     font-size: 1.3rem;
 }
+
 .forgotpasswordheader {
     /* text-align: center; */
     font-size: 2rem;
@@ -249,19 +254,25 @@ input[type=number] {
 .setpasswordbodycontainer {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 85%;
     gap: 3vh;
 }
 
 .setpasswordbodycontainerdiv {
     display: flex;
+    justify-content: center;
+    /* align-items: center; */
     gap: 1vh;
+    width: 100%;
     flex-direction: column;
 }
 
 .setpasswordinputlabel {
     color: grey;
     font-size: 1.2rem;
+
 }
 
 .setpasswordinput {
@@ -324,13 +335,15 @@ input[type=number] {
     gap: 2vh;
     width: 100%;
 }
-.forgotemailinputdiv{
+
+.forgotemailinputdiv {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
 }
+
 .forgotemailinput {
     width: 85%;
     padding: 1.3vh .5vw;
@@ -339,12 +352,14 @@ input[type=number] {
     outline: none;
     background-color: rgb(233, 230, 230);
 }
-.forgotemailbtndiv{
+
+.forgotemailbtndiv {
     width: 100%;
     display: flex;
     /* align-items: center; */
     justify-content: center;
 }
+
 .forgotemailbtn {
     width: 40%;
     padding: 1vh 0;
@@ -375,7 +390,70 @@ input[type=number] {
     .forgotpassworddiv {
         justify-content: flex-start;
     }
+
+    .forgotemailcontainer {
+        width: 85vw;
+        padding: 1vh 1vw;
+        gap: 3vh;
+    }
+
+    .otpimage {
+        width: 30vw;
+
+    }
+
+    .forgotemailcontainer .forgotemailcontainerbackbuttondiv {
+        color: blue;
+        display: flex;
+        position: absolute;
+        top: 28%;
+        left: 13%;
+        gap: .5vw;
+    }
+
+    .forgotemailinput {
+        padding: 1.5vh 2vw;
+        border-radius: 3px;
+    }
+
+    .forgotemailbtn {
+        width: 90%;
+    }
+
+    .forgotemailheader {
+        font-size: 2rem;
+    }
+
+    .forgotpasswordcontainer {
+        width: 80vw;
+        height: auto;
+    }
+
+    .otpinput {
+        padding: 1vh 2vw;
+        width: 23%;
+        font-size: 1.3rem;
+    }
+
+    .forgotpasswordbtn {
+        width: 90%;
+    }
+    .setpasswordcontainer{
+        width: 80vw;
+        height: auto;
+        padding: 2vh 1vw;
+    }
+    .setpasswordbtn{
+        width: 85%;
+    }
+    .setpasswordinput{
+        /* width: 100%; */
+    }
+    /* .setpasswordinputlabel{ */
+        
+    /* } */
 }
-.forgotpassworddiv{
+
+.forgotpassworddiv {
     font-size: 1.2rem;
 }

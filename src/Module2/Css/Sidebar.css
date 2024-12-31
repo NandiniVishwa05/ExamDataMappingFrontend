@@ -110,6 +110,7 @@
     }
 
     .navbarmaincontainer{
+        display: block;
         position: fixed;
         width: 100vw;
         height: 9vh;

@@ -44,7 +44,6 @@ export default function LoginPage() {
     const fetchusercredentials = async () => {
         const userid = document.getElementsByClassName('userid');
         const userpassword = document.getElementsByClassName('userpassword');
-        const errormsg = document.getElementsByClassName('errormsg');
         let res = await fetch(`http://localhost:3443/fetchusercredentials/${userid[0].value}/${userpassword[0].value}`, {
             method: 'GET',
             credentials: 'include'
@@ -66,15 +65,19 @@ export default function LoginPage() {
     }
 
     const checkuserlogin = async () => {
-        let res = await fetch(`http://localhost:3443/checkuserlogin`, {
-            method: 'GET',
-            credentials: 'include'
-        });
+        try {
+            let res = await fetch(`http://localhost:3443/checkuserlogin`, {
+                method: 'GET',
+                credentials: 'include'
+            });
 
-        res = await res.json();
+            res = await res.json();
 
-        if (res.msg === "userloggedin") {
-            navigate('/dashboard/insertprogram');
+            if (res.msg === "userloggedin") {
+                navigate('/dashboard/insertprogram');
+            }
+        } catch (error) {
+
         }
 
     }
@@ -162,7 +165,8 @@ export default function LoginPage() {
         res = await res.json();
         console.log(res);
         if (res.msg === "EmailSentSuccessfully") {
-            toast.success("Email sent Successfully !")
+            toast.success("Email sent Successfully !");
+            document.getElementsByClassName('otpemail')[0].innerHTML=`${email}`;
             displayOtpPage();
         }
     }
@@ -286,7 +290,7 @@ export default function LoginPage() {
                     </div>
                     <div className="forgotpassworddesc">
                         <label className='otpdesc'>We have sent six digit OTP code to </label>
-                        <label className='otpemail'>nandinivish05@gmail.com</label>
+                        <label className='otpemail'></label>
                     </div>
                     <div className="forgotpasswordbodycontainer">
                         <div className="forgotpasswordimagediv">
