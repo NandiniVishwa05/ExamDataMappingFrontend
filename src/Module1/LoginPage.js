@@ -127,6 +127,8 @@ export default function LoginPage() {
         }
     }
     const checkemail = async () => {
+
+        document.getElementsByClassName('otpinput')[0].value = "";
         let email = document.getElementsByClassName('forgotemailinput')[0].value;
         let res = await fetch(`http://localhost:3443/checkemail/${email}`, {
             method: "GET",
@@ -166,7 +168,7 @@ export default function LoginPage() {
         console.log(res);
         if (res.msg === "EmailSentSuccessfully") {
             toast.success("Email sent Successfully !");
-            document.getElementsByClassName('otpemail')[0].innerHTML=`${email}`;
+            document.getElementsByClassName('otpemail')[0].innerHTML = `${email}`;
             displayOtpPage();
         }
     }
