@@ -129,6 +129,7 @@ export default function LoginPage() {
     const checkemail = async () => {
 
         document.getElementsByClassName('otpinput')[0].value = "";
+        document.getElementsByClassName('otpinput')[0].style.border = "";
         let email = document.getElementsByClassName('forgotemailinput')[0].value;
         let res = await fetch(`http://localhost:3443/checkemail/${email}`, {
             method: "GET",
