@@ -36,7 +36,7 @@ export default function ManageUsers() {
   const checkuserdetails = async () => {
     const element1 = document.getElementsByClassName('userid');
     const errormsg = document.getElementsByClassName('usererrormsg');
-    let res = await fetch(`http://localhost:3443/fetchuserdetails/${element1[0].value}`, {
+    let res = await fetch(`http://192.168.77.141:3443/fetchuserdetails/${element1[0].value}`, {
       method: 'GET',
       credentials: 'include'
 
@@ -62,7 +62,7 @@ export default function ManageUsers() {
       userid: element1[0].value,
       userpassword: element2[0].value
     }
-    let res = await fetch('http://localhost:3443/insertuserdetail', {
+    let res = await fetch('http://192.168.77.141:3443/insertuserdetail', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(data),
@@ -87,7 +87,7 @@ export default function ManageUsers() {
 
   const fetchusertabledetails = async () => {
     // console.log("users fetched");
-    let res = await fetch('http://localhost:3443/fetchusers', {
+    let res = await fetch('http://192.168.77.141:3443/fetchusers', {
       method: 'GET',
       credentials: 'include'
 
@@ -104,7 +104,7 @@ export default function ManageUsers() {
 
   const deleteuser = async (index) => {
     // console.log(users[index].user_name);
-    let res = await fetch(`http://localhost:3443/deleteuser/${users[index].user_name}`, {
+    let res = await fetch(`http://192.168.77.141:3443/deleteuser/${users[index].user_name}`, {
       method: 'GET',
       credentials: 'include'
 
@@ -149,7 +149,7 @@ export default function ManageUsers() {
             </div>
             <div className="insertsubjectdetailsinputbuttondiv">
               <button className="insertsubjectdetailsinputbtn" onClick={validateuserdetails}>
-                <label>Add User</label>
+                Add User
               </button>
             </div>
           </div>
@@ -157,22 +157,24 @@ export default function ManageUsers() {
         <div className="userinputerrormsgdiv">
           <p className='usererrormsg'></p>
         </div>
-        <div className="insertsubjectfiltertablecontainer manageuserstable">
-          <table  >
-            <tr >
-              <th>Sr no.</th>
-              <th>User Name</th>
-              {/* <th>Semester</th> */}
-              <th>Delete</th>
-            </tr>
-            {users?.map((item, index) => (
-              <tr>
-                <td>{index + 1}.</td>
-                <td >{item.user_name}</td>
-                <td><button onClick={() => { deleteuser(index) }} className='deletebtn'>Delete</button></td>
+        <div className="manageusersparenttable">
+          <div className="insertsubjectfiltertablecontainer manageuserstable">
+            <table  >
+              <tr >
+                <th>Sr no.</th>
+                <th>User Name</th>
+                {/* <th>Semester</th> */}
+                <th>Delete</th>
               </tr>
-            ))}
-          </table>
+              {users?.map((item, index) => (
+                <tr>
+                  <td>{index + 1}.</td>
+                  <td >{item.user_name}</td>
+                  <td><button onClick={() => { deleteuser(index) }} className='deletebtn'>Delete</button></td>
+                </tr>
+              ))}
+            </table>
+          </div>
         </div>
       </div>
     </div>

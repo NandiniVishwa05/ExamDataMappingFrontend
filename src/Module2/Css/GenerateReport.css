@@ -2,6 +2,9 @@
     padding: 2vh 2vw;
     display: none;
     flex-direction: column;
+    box-shadow: 0 0px 8px 0 rgba(184, 184, 184, 0.2), 0 0px 20px 0 rgba(179, 179, 179, 0.19);
+    border-radius: 10px;
+    margin-top: 2vh;
     gap: 1vh;
 }
 
@@ -36,7 +39,7 @@
 
 .generatereporttablesection {
     overflow-y: scroll;
-    height: 37vh;
+    height: 34vh;
 }
 
 .generatereporttablesection table {
@@ -57,7 +60,7 @@
     padding: 1vh 0;
     /* width: 5.2%; */
     width: 12%;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
 }
 
 .generatereporttablesection td {
@@ -97,11 +100,45 @@
     }
 
     .downloadbtn{
-        top:1vh;
-        padding: 1.2vh 5vw;
+        /* top:1vh; */
+        bottom: 105%;
+        font-size: .7rem;
+        padding: 1.2vh 3vw;
+        border-radius: 5px;
     }
 
     .generatereporttablesection th {
         width: auto;
+        font-size: .7rem;
+    }
+    .generatereporttablesection td{
+        width: auto;
+        font-size: .8rem;
+    }
+    
+    .selectprogramheader{
+        font-size: 1rem;
+    }
+
+    .generatereportshowitem{
+        font-size: .8rem;
+    }
+    .manageprogramtable td {
+        font-size: .8rem;
+    }
+    .manageprogramtable p {
+        font-size: .8rem;
+    }
+    .manageprogramtable button {
+        font-size: .6rem;
+        padding: .6vh 1.5vw;
+    }
+
+    .manageprogramtable th {
+        font-size: .6rem;
+        padding: .6vh;
+    }
+    .insertsubjectdetailsinputbtn p {
+        padding: .2vh 3vw ;
     }
 }

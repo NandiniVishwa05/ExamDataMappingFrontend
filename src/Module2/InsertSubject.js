@@ -9,14 +9,14 @@ export default function InsertSubject() {
     const navigate = useNavigate()
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:3443/fetchcourses`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
             method: 'GET',
             credentials: 'include'
 
         });
 
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -26,13 +26,13 @@ export default function InsertSubject() {
     }
 
     const fetchsubjects = async () => {
-        let res = await fetch('http://localhost:3443/fetchsubjects', {
+        let res = await fetch('http://192.168.77.141:3443/fetchsubjects', {
             method: 'GET',
             credentials: 'include'
         });
 
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -42,9 +42,9 @@ export default function InsertSubject() {
     }
 
     const fetchCourseId = async (e) => {
-        setSubjects([]);
+        // setSubjects([]);
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -52,7 +52,7 @@ export default function InsertSubject() {
 
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -66,14 +66,14 @@ export default function InsertSubject() {
     const [semester, setSemester] = useState([]);
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials: 'include'
 
         })
 
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -107,13 +107,13 @@ export default function InsertSubject() {
 
     const checksubject = async () => {
         let errormsg = document.getElementsByClassName('selectprogramerrormsgitem');
-        let res = await fetch(`http://localhost:3443/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
             method: 'GET',
             credentials: 'include'
         });
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -129,7 +129,7 @@ export default function InsertSubject() {
 
     const deletesubject = async (index, e) => {
         // console.log(subject[index]);
-        let res = await fetch(`http://localhost:3443/deletesubject/${subject[index].subject_id}`, {
+        let res = await fetch(`http://192.168.77.141:3443/deletesubject/${subject[index].subject_id}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -137,7 +137,7 @@ export default function InsertSubject() {
 
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -157,14 +157,14 @@ export default function InsertSubject() {
 
     const filterbycourses = async () => {
         let element = document.getElementsByClassName('ddinputitem');
-        let res = await fetch(`http://localhost:3443/filterbycourses/${courseId}/${element[3].value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/filterbycourses/${courseId}/${element[3].value}`, {
             method: 'GET',
             credentials: 'include'
 
         })
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -226,62 +226,64 @@ export default function InsertSubject() {
                     <div className="selectprogramerrormsg">
                         <p className='selectprogramerrormsgitem'></p>
                     </div>
-                    <div className="insertsubjectaddfiltersectioncontainer">
-                        <div className="insertsubjectfiltersectionheader">
-                            <p>Filter Subject</p>
+                    <div className="insertsubjectfilterandtable">
+                        <div className="insertsubjectaddfiltersectioncontainer">
+                            <div className="insertsubjectfiltersectionheader">
+                                <p>Filter Subject</p>
+                            </div>
+                            <div className="insertsubjectfiltersectioninputdiv">
+                                <div className="selectprograminputitem">
+                                    <p>Select Course </p>
+                                    <select className='inputitem ddinputitem' onChange={(e) => {
+                                        fetchCourseId(e);
+                                    }}>
+                                        <option value='Select...' >Select...</option>
+                                        {courses.map((data, index) => (
+                                            <>
+                                                <option value={data.course_name}>{data.course_name}</option>
+                                            </>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="selectprograminputitem">
+                                    <p>Semester </p>
+                                    <select className='inputitem ddinputitem' >
+                                        <option value="Select...">Select...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                                <div className="insertsubjectdetailsinputbuttondiv">
+                                    <button className="insertsubjectdetailsinputbtn" onClick={validatefiltersubject}>
+                                        <p>Submit</p>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="insertsubjectfiltersectioninputdiv">
-                            <div className="selectprograminputitem">
-                                <p>Select Course </p>
-                                <select className='inputitem ddinputitem' onChange={(e) => {
-                                    fetchCourseId(e);
-                                }}>
-                                    <option value='Select...' >Select...</option>
-                                    {courses.map((data, index) => (
-                                        <>
-                                            <option value={data.course_name}>{data.course_name}</option>
-                                        </>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="selectprograminputitem">
-                                <p>Semester </p>
-                                <select className='inputitem ddinputitem' >
-                                    <option value="Select...">Select...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
-                            </div>
-                            <div className="insertsubjectdetailsinputbuttondiv">
-                                <button className="insertsubjectdetailsinputbtn" onClick={validatefiltersubject}>
-                                    <p>Submit</p>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="insertsubjectfiltertablecontainer">
-                        <table  >
-                            <tr >
-                                <th>Sr no.</th>
-                                <th>Subject Name</th>
-                                <th>Course Name</th>
-                                <th>Semester</th>
-                                <th>Delete</th>
-                            </tr>
-                            {subject.map((item, index) => (
-                                <tr>
-                                    <td>{index + 1}</td>
-                                    <td className='subjectname' >{item.subject_name}</td>
-                                    <td className='coursename'>{item.course_name}</td>
-                                    <td className='semester'>{item.semester}</td>
-                                    <td><button onClick={(e) => { deletesubject(index, e) }} className='deletebtn'>Delete</button></td>
+                        <div className="insertsubjectfiltertablecontainer">
+                            <table  >
+                                <tr >
+                                    <th>Sr no.</th>
+                                    <th>Subject Name</th>
+                                    <th>Course Name</th>
+                                    <th>Semester</th>
+                                    <th>Delete</th>
                                 </tr>
-                            ))}
-                        </table>
+                                {subject.map((item, index) => (
+                                    <tr>
+                                        <td>{index + 1}</td>
+                                        <td className='subjectname' >{item.subject_name}</td>
+                                        <td className='coursename'>{item.course_name}</td>
+                                        <td className='semester'>{item.semester}</td>
+                                        <td><button onClick={(e) => { deletesubject(index, e) }} className='deletebtn'>Delete</button></td>
+                                    </tr>
+                                ))}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

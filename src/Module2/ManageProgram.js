@@ -52,7 +52,7 @@ export default function ManageProgram() {
             no_of_semester: element[1].value,
             no_of_division: element[2].value
         }
-        let res = await fetch('http://localhost:3443/insertadminprogramdetail', {
+        let res = await fetch('http://192.168.77.141:3443/insertadminprogramdetail', {
             method: 'POST',
             credentials:'include',
 
@@ -74,7 +74,7 @@ export default function ManageProgram() {
     }
 
     const fetchadminprogramtabledetails = async () => {
-        let res = await fetch(`http://localhost:3443/fetchadminprogramtabledetails`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchadminprogramtabledetails`, {
             method: 'GET',
             credentials:'include'
 
@@ -92,7 +92,7 @@ export default function ManageProgram() {
 
     }
     const deleteadmintableprogramdetail = async (index) => {
-        let res = await fetch(`http://localhost:3443/deleteadmintableprogramdetail/${course[index].course_id}`, {
+        let res = await fetch(`http://192.168.77.141:3443/deleteadmintableprogramdetail/${course[index].course_id}`, {
             method: 'GET',
             credentials:'include'
 

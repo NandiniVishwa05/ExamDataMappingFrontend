@@ -44,7 +44,7 @@ export default function LoginPage() {
     const fetchusercredentials = async () => {
         const userid = document.getElementsByClassName('userid');
         const userpassword = document.getElementsByClassName('userpassword');
-        let res = await fetch(`http://localhost:3443/fetchusercredentials/${userid[0].value}/${userpassword[0].value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchusercredentials/${userid[0].value}/${userpassword[0].value}`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -66,7 +66,7 @@ export default function LoginPage() {
 
     const checkuserlogin = async () => {
         try {
-            let res = await fetch(`http://localhost:3443/checkuserlogin`, {
+            let res = await fetch(`http://192.168.77.141:3443/checkuserlogin`, {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -131,7 +131,7 @@ export default function LoginPage() {
         document.getElementsByClassName('otpinput')[0].value = "";
         document.getElementsByClassName('otpinput')[0].style.border = "";
         let email = document.getElementsByClassName('forgotemailinput')[0].value;
-        let res = await fetch(`http://localhost:3443/checkemail/${email}`, {
+        let res = await fetch(`http://192.168.77.141:3443/checkemail/${email}`, {
             method: "GET",
         });
         res = await res.json();
@@ -157,7 +157,7 @@ export default function LoginPage() {
             otp: otp,
             email: email
         }
-        let res = await fetch(`http://localhost:3443/sendmail`, {
+        let res = await fetch(`http://192.168.77.141:3443/sendmail`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -237,7 +237,7 @@ export default function LoginPage() {
             uid: uid.data[0].user_id,
             password: password
         }
-        let res = await fetch(`http://localhost:3443/insertpassword`, {
+        let res = await fetch(`http://192.168.77.141:3443/insertpassword`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {

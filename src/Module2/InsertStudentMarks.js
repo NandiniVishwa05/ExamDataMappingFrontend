@@ -12,7 +12,7 @@ export default function InsertStudentMarks() {
     const navigate = useNavigate
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:3443/fetchcourses`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
             method: 'GET',
             credentials:'include'
         })
@@ -33,7 +33,7 @@ export default function InsertStudentMarks() {
         elements[5].disabled = true;
         elements[4].value = "Select...";
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials:'include'
 
@@ -56,7 +56,7 @@ export default function InsertStudentMarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials:'include'
 
@@ -73,7 +73,7 @@ export default function InsertStudentMarks() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET',
             credentials:'include'
 
@@ -88,7 +88,7 @@ export default function InsertStudentMarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsubjectid/${e.target.value}`, {
             method: 'GET',
             credentials:'include'
 
@@ -139,7 +139,7 @@ export default function InsertStudentMarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
+        let res = await fetch('http://192.168.77.141:3443/fetchprogramidforreport', {
             method: 'POST',
             credentials:'include',
             body: JSON.stringify(data),
@@ -225,7 +225,7 @@ export default function InsertStudentMarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://localhost:3443/insertmarksdetail', {
+        let res = await fetch('http://192.168.77.141:3443/insertmarksdetail', {
             method: 'POST',
             credentials:'include',
             body: JSON.stringify(data),

@@ -13,7 +13,7 @@ export default function GenerateReport() {
     const [facultyName, setFacultyName] = useState();
     const navigate = useNavigate()
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:3443/fetchcourses`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -34,7 +34,7 @@ export default function GenerateReport() {
         elements[5].disabled = true;
         elements[4].value = "Select...";
         // console.log(e.target.value);
-        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -58,7 +58,7 @@ export default function GenerateReport() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -74,7 +74,7 @@ export default function GenerateReport() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -92,7 +92,7 @@ export default function GenerateReport() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsubjectid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -144,7 +144,7 @@ export default function GenerateReport() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
+        let res = await fetch('http://192.168.77.141:3443/fetchprogramidforreport', {
             method: 'POST',
             credentials: 'include',
 

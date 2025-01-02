@@ -10,7 +10,7 @@ export default function Insertmarks() {
     const navigate = useNavigate();
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://localhost:3443/fetchcourses`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -30,7 +30,7 @@ export default function Insertmarks() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -53,7 +53,7 @@ export default function Insertmarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -68,7 +68,7 @@ export default function Insertmarks() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -85,7 +85,7 @@ export default function Insertmarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://192.168.77.141:3443/fetchsubjectid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -140,7 +140,7 @@ export default function Insertmarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://localhost:3443/fetchprogramid', {
+        let res = await fetch('http://192.168.77.141:3443/fetchprogramid', {
             method: 'POST',
             credentials: 'include',
 
@@ -162,7 +162,7 @@ export default function Insertmarks() {
             setProgramId(res.data[0].program_id);
             // programid = res.data[0].program_id;
         } else if (res.msg === "notfound") {
-            let res = await fetch('http://localhost:3443/insertprogramdata', {
+            let res = await fetch('http://192.168.77.141:3443/insertprogramdata', {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(data),
@@ -197,7 +197,7 @@ export default function Insertmarks() {
             subject_code: document.getElementsByClassName('inputitem')[6].value,
             faculty_name: document.getElementsByClassName('inputitem')[7].value
         }
-        let res = await fetch('http://localhost:3443/overrideprogramdata', {
+        let res = await fetch('http://192.168.77.141:3443/overrideprogramdata', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -267,7 +267,7 @@ export default function Insertmarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://localhost:3443/insertmarksdetail', {
+        let res = await fetch('http://192.168.77.141:3443/insertmarksdetail', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -343,7 +343,7 @@ export default function Insertmarks() {
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Course Name</p>
+                                <p className='insertmarkslabel'>Course Name</p>
                                 <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     fetchCourseId(e);
 
@@ -359,7 +359,7 @@ export default function Insertmarks() {
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Year</p>
+                                <p className='insertmarkslabel'>Year</p>
                                 <select disabled className='inputitem ddinputitem' onChange={() => {
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[3].disabled = false;
@@ -371,7 +371,7 @@ export default function Insertmarks() {
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Division</p>
+                                <p className='insertmarkslabel'>Division</p>
                                 <select disabled className='inputitem ddinputitem' onChange={() => {
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[4].disabled = false;
@@ -385,7 +385,7 @@ export default function Insertmarks() {
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Semester</p>
+                                <p className='insertmarkslabel'>Semester</p>
                                 <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[5].disabled = false;
@@ -400,7 +400,7 @@ export default function Insertmarks() {
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Subject Name</p>
+                                <p className='insertmarkslabel'>Subject Name</p>
                                 <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[6].style.backgroundColor = "#F8F2F2"
@@ -418,11 +418,11 @@ export default function Insertmarks() {
                                 </select>
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Subject Code</p>
+                                <p className='insertmarkslabel'>Subject Code</p>
                                 <input type="text" disabled className='inputitem textinputitem' />
                             </div>
                             <div className="selectprograminputitem">
-                                <p>Faculty Name</p>
+                                <p className='insertmarkslabel'>Faculty Name</p>
                                 <input type="text" disabled className='inputitem textinputitem' />
                             </div>
                         </div>
