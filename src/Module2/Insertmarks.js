@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Insertmarks() {
     const [courses, setCourses] = useState([]);
@@ -10,7 +11,7 @@ export default function Insertmarks() {
     const navigate = useNavigate();
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
+        let res = await fetch(`http://localhost:3443/fetchcourses`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -30,7 +31,7 @@ export default function Insertmarks() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -53,7 +54,7 @@ export default function Insertmarks() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -68,15 +69,23 @@ export default function Insertmarks() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
         });
         res = await res.json();
+        console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
+        }
+
+        if (res.length === 0) {
+            toast.error('Subjects not found!')
+            setSubjects([]);
+            document.getElementsByClassName('inputitem')[5].selectedIndex = 0;
+            document.getElementsByClassName('inputitem')[5].disabled = true;
         }
 
         if (res !== "error") {
@@ -85,7 +94,7 @@ export default function Insertmarks() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -105,24 +114,20 @@ export default function Insertmarks() {
 
     const validateInputs = () => {
         let elements = document.getElementsByClassName('inputitem');
-        let errormsg = document.querySelector('.selectprogramerrormsgitem');
         let errorcounter = 0;
         for (let i = 0; i < elements.length; i++) {
             const element = elements[i];
             if (element.value === "Select..." || element.value === "") {
                 errorcounter++;
                 element.style.borderColor = "red";
-                errormsg.innerHTML = "Please fill the details!"
-                errormsg.style.color = "Red"
+                toast.error("Please fill the details!");
             } else {
-                errormsg.innerHTML = ""
                 element.style.borderColor = "#acacac";
             }
         }
 
         if (errorcounter === 0) {
             fetchprogramid();
-
         }
 
     }
@@ -140,7 +145,7 @@ export default function Insertmarks() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://192.168.77.141:3443/fetchprogramid', {
+        let res = await fetch('http://localhost:3443/fetchprogramid', {
             method: 'POST',
             credentials: 'include',
 
@@ -160,9 +165,8 @@ export default function Insertmarks() {
             document.querySelector('.overlay').style.display = "flex";
             document.querySelector('.popupbox').style.display = "flex";
             setProgramId(res.data[0].program_id);
-            // programid = res.data[0].program_id;
         } else if (res.msg === "notfound") {
-            let res = await fetch('http://192.168.77.141:3443/insertprogramdata', {
+            let res = await fetch('http://localhost:3443/insertprogramdata', {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(data),
@@ -177,13 +181,11 @@ export default function Insertmarks() {
                 return;
             }
             if (res.msg === "Inserted") {
-                let errormsg = document.querySelector('.selectprogramerrormsgitem');
-                errormsg.style.color = "Green"
-                errormsg.innerHTML = "Data Inserted Successfully!"
+                toast.success("Data Inserted Successfully!");
             }
         }
     }
-
+    
     const overrideprogramdata = async () => {
         // console.log(document.getElementsByClassName('inputitem')[0].value);
         let data = {
@@ -197,7 +199,7 @@ export default function Insertmarks() {
             subject_code: document.getElementsByClassName('inputitem')[6].value,
             faculty_name: document.getElementsByClassName('inputitem')[7].value
         }
-        let res = await fetch('http://192.168.77.141:3443/overrideprogramdata', {
+        let res = await fetch('http://localhost:3443/overrideprogramdata', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -212,9 +214,7 @@ export default function Insertmarks() {
             return;
         }
         if (res.msg === "Inserted") {
-            let errormsg = document.querySelector('.selectprogramerrormsgitem');
-            errormsg.style.color = "Green"
-            errormsg.innerHTML = "Data Inserted Successfully!"
+            toast.success("Data Inserted Successfully!");
         }
     }
 
@@ -235,8 +235,7 @@ export default function Insertmarks() {
             errormsg[0].innerHTML = "";
             insertmarksdetails();
         } else {
-            errormsg[0].innerHTML = "Please fill the details !"
-            errormsg[0].style.color = "red";
+            toast.error("Please fill the details !");
             return;
         }
 
@@ -251,10 +250,9 @@ export default function Insertmarks() {
             }
         }
         if (errorcount > 0) {
-            errormsg[0].style.color = "red";
-            errormsg[0].innerHTML = "Please Enter a Number!";
+            toast.error("Please ! Enter a number.")
         } else {
-            errormsg[0].innerHTML = "";
+
         }
     }
     const insertmarksdetails = async () => {
@@ -267,7 +265,7 @@ export default function Insertmarks() {
             qfive: document.getElementsByClassName('qfive')[0].value,
             program_id: programId
         }
-        let res = await fetch('http://192.168.77.141:3443/insertmarksdetail', {
+        let res = await fetch('http://localhost:3443/insertmarksdetail', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -282,6 +280,7 @@ export default function Insertmarks() {
             return;
         }
         if (res.msg === "Inserted marks") {
+            toast.success('Inserted Successfully')
             let elements = document.getElementsByClassName('qitem');
             for (let i = 0; i < elements.length; i++) {
                 const element = elements[i];
@@ -300,6 +299,7 @@ export default function Insertmarks() {
 
     return (
         <>
+            <ToastContainer />
             <div className="overlay">
             </div>
             <div className="popupcontainer">
@@ -346,7 +346,6 @@ export default function Insertmarks() {
                                 <p className='insertmarkslabel'>Course Name</p>
                                 <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     fetchCourseId(e);
-
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[2].disabled = false;
                                 }}>
@@ -430,9 +429,7 @@ export default function Insertmarks() {
                             <button className="selectprogramsubmitbtn insertdatabtn" onClick={validateInputs}>
                                 <p>Submit</p>
                             </button>
-                            <div className="selectprogramerrormsg">
-                                <p className='selectprogramerrormsgitem'></p>
-                            </div>
+
                         </div>
                     </div>
                     <div className="insertmarksmaincontainer">
@@ -472,7 +469,6 @@ export default function Insertmarks() {
                             <div className="selectprogramsubmitbtn " onClick={validatequestioninput}>
                                 <p>Next</p>
                             </div>
-                            <p className='qerrormsg'></p>
                         </div>
                     </div>
                 </div>

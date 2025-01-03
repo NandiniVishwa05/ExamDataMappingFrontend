@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import './Css/Insertsubject.css'
+import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 export default function InsertSubject() {
 
     const [courses, setCourses] = useState([]);
     const [courseId, setCourseId] = useState();
+    const [courseIdFilter, setCourseIdFilter] = useState();
     const [subject, setSubjects] = useState([]);
+    const [semester, setSemester] = useState([]);
+    const [semesterForFilter, setSemesterForFilter] = useState([]);
+    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
     const navigate = useNavigate()
 
     const fetchcourses = async () => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
+        let res = await fetch(`http://localhost:3443/fetchcourses`, {
             method: 'GET',
             credentials: 'include'
 
@@ -26,17 +32,24 @@ export default function InsertSubject() {
     }
 
     const fetchsubjects = async () => {
-        let res = await fetch('http://192.168.77.141:3443/fetchsubjects', {
+        let res = await fetch('http://localhost:3443/fetchsubjects', {
             method: 'GET',
             credentials: 'include'
         });
 
         res = await res.json();
+
+        if (res.length === 0) {
+            toast.error("Subjects not found");
+            setSubjects([]);
+            document.getElementsByClassName('inputitem')[5].selectedIndex = 0;
+            document.getElementsByClassName('inputitem')[5].disabled = true;
+        }
+
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
-        // console.log(res);
         setSubjects(res);
 
     }
@@ -44,7 +57,11 @@ export default function InsertSubject() {
     const fetchCourseId = async (e) => {
         // setSubjects([]);
         // console.log(e.target.value);
-        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
+        if (e.target.selectedIndex === 0) {
+            document.getElementsByClassName('inputitem')[1].disabled = true;
+            return;
+        }
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -56,17 +73,45 @@ export default function InsertSubject() {
             navigate('/');
             return;
         }
+
         if (res !== "error") {
+
             setCourseId(res[0].course_id);
             fetchsemanddiv(res[0].course_id);
+            document.getElementsByClassName('inputitem')[1].disabled = false;
         }
     }
 
+    const fetchCourseIdforFilter = async (e) => {
+        // setSubjects([]);
+        // console.log(e.target.value);
+        if (e.target.selectedIndex === 0) {
+            document.getElementsByClassName('inputitem')[4].disabled = true;
+            return;
+        }
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
+            method: 'GET',
+            credentials: 'include'
 
-    const [semester, setSemester] = useState([]);
-    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        });
+
+        res = await res.json();
+        // console.log(res);
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
+
+        if (res !== "error") {
+
+            setCourseId(res[0].course_id);
+            fetchsemanddivforfilter(res[0].course_id);
+            document.getElementsByClassName('inputitem')[4].disabled = false;
+        }
+    }
+
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -81,33 +126,43 @@ export default function InsertSubject() {
         setSemester(res.data[0].no_of_semester);
     }
 
+    const fetchsemanddivforfilter = async (courseid) => {
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
+            method: 'GET',
+            credentials: 'include'
+
+        })
+
+        res = await res.json();
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
+            navigate('/');
+            return;
+        }
+        // console.log(res);
+        setSemesterForFilter(res.data[0].no_of_semester);
+    }
+
     const validateinputs = () => {
         let errorcounter = 0;
         let elements = document.getElementsByClassName('addsubjectitem');
-        let errormsg = document.getElementsByClassName('selectprogramerrormsgitem');
 
         for (let i = 0; i < elements.length; i++) {
             const element = elements[i];
             if (element.value === "" || element.value === "Select...") {
                 element.style.borderColor = "red";
-                errormsg[0].style.color = "red";
-                errormsg[0].innerHTML = "Please Enter all the details";
+                toast.error("Please Enter all the details")
             } else {
                 element.style.borderColor = "black";
-
             }
         }
 
         if (errorcounter === 0) {
             checksubject();
-        } else {
-            errormsg[0].innerHTML = "";
         }
     }
 
     const checksubject = async () => {
-        let errormsg = document.getElementsByClassName('selectprogramerrormsgitem');
-        let res = await fetch(`http://192.168.77.141:3443/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
+        let res = await fetch(`http://localhost:3443/checksubject/${courseId}/${document.getElementsByClassName('inputitem')[1].value}/${document.getElementsByClassName('inputitem')[2].value}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -118,18 +173,16 @@ export default function InsertSubject() {
             return;
         }
         if (res.msg === "subjectinserted") {
-            errormsg[0].innerHTML = "Subject Inserted Successfully";
-            errormsg[0].style.color = "green";
+            toast.success("Subject Inserted Successfully")
             fetchsubjects();
         } else if (res.msg === "oldsubject") {
-            errormsg[0].innerHTML = "Subject already exists";
-            errormsg[0].style.color = "Red";
+            toast.success("Subject already exists")
         }
     }
 
     const deletesubject = async (index, e) => {
         // console.log(subject[index]);
-        let res = await fetch(`http://192.168.77.141:3443/deletesubject/${subject[index].subject_id}`, {
+        let res = await fetch(`http://localhost:3443/deletesubject/${subject[index].subject_id}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -142,6 +195,7 @@ export default function InsertSubject() {
             return;
         }
         if (res.msg === "subjectdeleted") {
+            toast.success("Subject Deleted Successfully!")
             fetchsubjects();
         }
     }
@@ -157,7 +211,7 @@ export default function InsertSubject() {
 
     const filterbycourses = async () => {
         let element = document.getElementsByClassName('ddinputitem');
-        let res = await fetch(`http://192.168.77.141:3443/filterbycourses/${courseId}/${element[3].value}`, {
+        let res = await fetch(`http://localhost:3443/filterbycourses/${courseId}/${element[3].value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -168,7 +222,12 @@ export default function InsertSubject() {
             navigate('/');
             return;
         }
-        if (res.msg === "filtersfetched") {
+
+        if (res.msg === "norecordsfound") {
+            toast.success("Records not found!");return;
+        }
+        else if (res.msg === "filtersfetched") {
+            toast.success("Fetched Successfully!")
             setSubjects(res.data);
         }
     }
@@ -183,6 +242,7 @@ export default function InsertSubject() {
 
     return (
         <>
+            <ToastContainer />
             <div className="insertsubjectmaincontainer">
                 <div className="insertsubjectchildcontainer">
                     <div className="selectsubjectcontainer">
@@ -203,8 +263,8 @@ export default function InsertSubject() {
                             </div>
                             <div className="selectprograminputitem">
                                 <p>Semester </p>
-                                <select className='inputitem ddinputitem addsubjectitem' onChange={(e) => { }}>
-                                    <option value="Select...">Select...</option>
+                                <select className='inputitem ddinputitem addsubjectitem' disabled onChange={(e) => { }}>
+                                    <option value="Select..." >Select...</option>
                                     {sems.map((item, index) => (
                                         <>
                                             {item <= semester ? <option value={item}>{item}</option> : null}
@@ -235,7 +295,7 @@ export default function InsertSubject() {
                                 <div className="selectprograminputitem">
                                     <p>Select Course </p>
                                     <select className='inputitem ddinputitem' onChange={(e) => {
-                                        fetchCourseId(e);
+                                        fetchCourseIdforFilter(e);
                                     }}>
                                         <option value='Select...' >Select...</option>
                                         {courses.map((data, index) => (
@@ -247,14 +307,13 @@ export default function InsertSubject() {
                                 </div>
                                 <div className="selectprograminputitem">
                                     <p>Semester </p>
-                                    <select className='inputitem ddinputitem' >
-                                        <option value="Select...">Select...</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
+                                    <select disabled className='inputitem ddinputitem' >
+                                        <option value="Select..." >Select...</option>
+                                        {sems.map((item, index) => (
+                                            <>
+                                                {item <= semesterForFilter ? <option value={item}>{item}</option> : null}
+                                            </>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="insertsubjectdetailsinputbuttondiv">

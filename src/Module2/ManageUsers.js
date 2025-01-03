@@ -1,33 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import './Css/ManageUsers.css'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 export default function ManageUsers() {
 
   const [users, setUsers] = useState([]);
   const navigate = useNavigate()
 
   const validateuserdetails = () => {
+    console.log("heelo");
+
     const element1 = document.getElementsByClassName('userid');
     const element2 = document.getElementsByClassName('password');
-    const errormsg = document.getElementsByClassName('usererrormsg');
     // console.log(element1[0].value);
     let errcount = 0;
-
     if (element1[0].value === "") {
       errcount++
-      errormsg[0].innerHTML = "This is required field !"
-      errormsg[0].style.color = "red";
-    } else {
-      errormsg[0].innerHTML = "";
-
+      element1[0].style.border = "1px solid red"
+      toast.error("This is required field !")
     }
+
     if (element2[0].value === "") {
       errcount++
-      errormsg[0].innerHTML = "This is required field !"
-      errormsg[0].style.color = "red";
+      element2[0].style.border = "1px solid red"
+      toast.error("This is required field !");
     } else {
-      errormsg[0].innerHTML = "";
+      element2[0].style.border = "1px solid grey";
     }
+
+    if(errcount>0){
+      return
+    }
+
+    if (!element1[0].value.includes("@")) {
+      element1[0].style.border = "1px solid red";
+      toast.error("Invalid Email ID.")
+      errcount++
+    } else {
+      element1[0].style.border = "1px solid grey";
+    }
+
+    if (!element1[0].value.includes(".com")) {
+      toast.error("Invalid Email ID.")
+      element1[0].style.border = "1px solid red";
+      errcount++
+    } else {
+      element1[0].style.border = "1px solid grey";
+    }
+
+
     if (errcount === 0) {
       checkuserdetails();
     }
@@ -35,8 +56,8 @@ export default function ManageUsers() {
 
   const checkuserdetails = async () => {
     const element1 = document.getElementsByClassName('userid');
-    const errormsg = document.getElementsByClassName('usererrormsg');
-    let res = await fetch(`http://192.168.77.141:3443/fetchuserdetails/${element1[0].value}`, {
+    const element2 = document.getElementsByClassName('password');
+    let res = await fetch(`http://localhost:3443/fetchuserdetails/${element1[0].value}`, {
       method: 'GET',
       credentials: 'include'
 
@@ -48,21 +69,23 @@ export default function ManageUsers() {
       return;
     }
     if (res.msg === "newuser") {
+      toast.success("Added Successfully!")
       insertuserdetail();
     } else {
-      errormsg[0].innerHTML = "User already exist!"
+      element1[0].value = "";
+      element2[0].value = "";
+      toast.error("User already exist!")
     }
   }
 
   const insertuserdetail = async () => {
     const element1 = document.getElementsByClassName('userid');
     const element2 = document.getElementsByClassName('password');
-    const errormsg = document.getElementsByClassName('usererrormsg');
     let data = {
       userid: element1[0].value,
       userpassword: element2[0].value
     }
-    let res = await fetch('http://192.168.77.141:3443/insertuserdetail', {
+    let res = await fetch('http://localhost:3443/insertuserdetail', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(data),
@@ -78,8 +101,9 @@ export default function ManageUsers() {
     }
     // console.log(res);
     if (res.msg === "insertedsuccesfully") {
-      errormsg[0].style.color = "green";
-      errormsg[0].innerHTML = "User Added Successfully";
+      toast.success("User Added Successfully");
+      element1[0].value = "";
+      element2[0].value = "";
       fetchusertabledetails();
       // setUsers(res.data)
     }
@@ -87,7 +111,7 @@ export default function ManageUsers() {
 
   const fetchusertabledetails = async () => {
     // console.log("users fetched");
-    let res = await fetch('http://192.168.77.141:3443/fetchusers', {
+    let res = await fetch('http://localhost:3443/fetchusers', {
       method: 'GET',
       credentials: 'include'
 
@@ -98,13 +122,14 @@ export default function ManageUsers() {
       return;
     }
     if (res.msg == "usersfetched") {
+      // toast.success("Fetched Successfully!")
       setUsers(res.data)
     }
   }
 
   const deleteuser = async (index) => {
     // console.log(users[index].user_name);
-    let res = await fetch(`http://192.168.77.141:3443/deleteuser/${users[index].user_name}`, {
+    let res = await fetch(`http://localhost:3443/deleteuser/${users[index].user_name}`, {
       method: 'GET',
       credentials: 'include'
 
@@ -116,6 +141,7 @@ export default function ManageUsers() {
     }
     // console.log(res);
     if (res.msg === "userdeleted") {
+      toast.success("User deleted successfully!")
       // console.log("deleted");
 
       fetchusertabledetails();
@@ -132,51 +158,51 @@ export default function ManageUsers() {
   }, [])
 
   return (
-    <div className='insertsubjectmaincontainer'>
-      <div className="manageuserschildcontainer">
-        <div className="manageuserssection1">
-          <div className="selectprogramheader">
-            <p className='insertsubjecttheader'>Add User</p>
+    <>
+      <ToastContainer />
+      <div className='insertsubjectmaincontainer'>
+        <div className="manageuserschildcontainer">
+          <div className="manageuserssection1">
+            <div className="selectprogramheader">
+              <p className='insertsubjecttheader'>Add User</p>
+            </div>
+            <div className="selectprograminputlist">
+              <div className="adduserinputitem selectprograminputitem ">
+                <p>Email ID : </p>
+                <input type="text" className="userid" name="" id="" />
+              </div>
+              <div className="adduserinputitem selectprograminputitem">
+                <p>Password : </p>
+                <input type="text" className='password' name="" id="" />
+              </div>
+              <div className="insertsubjectdetailsinputbuttondiv">
+                <button className="insertsubjectdetailsinputbtn" onClick={validateuserdetails}>
+                  Add User
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="selectprograminputlist">
-            <div className="adduserinputitem selectprograminputitem ">
-              <p>User id : </p>
-              <input type="text" className="userid" name="" id="" />
-            </div>
-            <div className="adduserinputitem selectprograminputitem">
-              <p>Password : </p>
-              <input type="text" className='password' name="" id="" />
-            </div>
-            <div className="insertsubjectdetailsinputbuttondiv">
-              <button className="insertsubjectdetailsinputbtn" onClick={validateuserdetails}>
-                Add User
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="userinputerrormsgdiv">
-          <p className='usererrormsg'></p>
-        </div>
-        <div className="manageusersparenttable">
-          <div className="insertsubjectfiltertablecontainer manageuserstable">
-            <table  >
-              <tr >
-                <th>Sr no.</th>
-                <th>User Name</th>
-                {/* <th>Semester</th> */}
-                <th>Delete</th>
-              </tr>
-              {users?.map((item, index) => (
-                <tr>
-                  <td>{index + 1}.</td>
-                  <td >{item.user_name}</td>
-                  <td><button onClick={() => { deleteuser(index) }} className='deletebtn'>Delete</button></td>
+          <div className="manageusersparenttable">
+            <div className="insertsubjectfiltertablecontainer manageuserstable">
+              <table  >
+                <tr >
+                  <th>Sr no.</th>
+                  <th>User Name</th>
+                  {/* <th>Semester</th> */}
+                  <th>Delete</th>
                 </tr>
-              ))}
-            </table>
+                {users?.map((item, index) => (
+                  <tr>
+                    <td>{index + 1}.</td>
+                    <td >{item.user_name}</td>
+                    <td><button onClick={() => { deleteuser(index) }} className='deletebtn'>Delete</button></td>
+                  </tr>
+                ))}
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

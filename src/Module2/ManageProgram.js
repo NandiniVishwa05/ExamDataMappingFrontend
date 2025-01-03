@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ManageProgram() {
     const [course, setCourses] = useState([]);
@@ -7,22 +8,18 @@ export default function ManageProgram() {
 
     const validateprograminput = () => {
         let element = document.getElementsByClassName('addsubjectitem');
-        const errormsg = document.getElementsByClassName('qerrormsg');
-
         let errorcount = 0;
         for (let i = 0; i < element.length; i++) {
             if (element[i].value === "") {
                 errorcount++;
                 element[i].style.borderColor = "red";
+                toast.error("This is required field!")
             } else {
                 element[i].style.borderColor = "#acacac";
             }
         }
-        if (errorcount === 0) {
-            errormsg[0].innerHTML = "";
-        } else {
-            errormsg[0].innerHTML = "Please fill the details !"
-            errormsg[0].style.color = "red";
+        if (errorcount !== 0) {
+            toast.error("Please! fill the details !")
             return;
         }
 
@@ -37,10 +34,8 @@ export default function ManageProgram() {
             }
         }
         if (errorcount > 0) {
-            errormsg[0].style.color = "red";
-            errormsg[0].innerHTML = "Please Enter a Number!";
+            toast.error("Please! Enter a Number!");
         } else {
-            errormsg[0].innerHTML = "";
             insertadminprogramdetail();
         }
     }
@@ -52,9 +47,9 @@ export default function ManageProgram() {
             no_of_semester: element[1].value,
             no_of_division: element[2].value
         }
-        let res = await fetch('http://192.168.77.141:3443/insertadminprogramdetail', {
+        let res = await fetch('http://localhost:3443/insertadminprogramdetail', {
             method: 'POST',
-            credentials:'include',
+            credentials: 'include',
 
             body: JSON.stringify(data),
             headers: {
@@ -64,25 +59,28 @@ export default function ManageProgram() {
         });
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
         if (res.msg === "insertedsuccesfully") {
+            toast.success("Program added successfully!")
             fetchadminprogramtabledetails();
+        } else if (res.msg === "error") {
+            toast.error("Program already exists!")
         }
     }
 
     const fetchadminprogramtabledetails = async () => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchadminprogramtabledetails`, {
+        let res = await fetch(`http://localhost:3443/fetchadminprogramtabledetails`, {
             method: 'GET',
-            credentials:'include'
+            credentials: 'include'
 
         });
 
         res = await res.json();
         // console.log(res);
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
@@ -92,18 +90,21 @@ export default function ManageProgram() {
 
     }
     const deleteadmintableprogramdetail = async (index) => {
-        let res = await fetch(`http://192.168.77.141:3443/deleteadmintableprogramdetail/${course[index].course_id}`, {
+        let res = await fetch(`http://localhost:3443/deleteadmintableprogramdetail/${course[index].course_id}`, {
             method: 'GET',
-            credentials:'include'
+            credentials: 'include'
 
         })
 
         res = await res.json();
-        if(res.msg=== "InvalidToken"|| res.msg==="NoToken"){
+        if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
-        fetchadminprogramtabledetails();
+        if (res.msg === "coursedeleted") {
+            toast.success("Deleted successfully!")
+            fetchadminprogramtabledetails();
+        }
     }
 
     useEffect(() => {
@@ -115,6 +116,7 @@ export default function ManageProgram() {
     }, [])
     return (
         <>
+            <ToastContainer />
             <div className="insertsubjectmaincontainer">
                 <div className="insertsubjectchildcontainer">
                     <div className="selectsubjectcontainer">

@@ -3,14 +3,13 @@ import './Css/Sidebar.css'
 import './Css/InsertMarks.css'
 import img from './Resources/DAV logo.jpeg'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const [adminVal, setAdminVal] = useState(0);
 
   const logout = async () => {
-    let res = await fetch('http://192.168.77.141:3443/logout', {
+    let res = await fetch('http://localhost:3443/logout', {
       credentials: 'include',
       method: 'GET'
     })
@@ -23,7 +22,7 @@ export default function Sidebar() {
   const fetchUserType = async () => {
     console.log("function");
     try {
-      let res = await fetch('http://192.168.77.141:3443/fetchusertype', {
+      let res = await fetch('http://localhost:3443/fetchusertype', {
         method: 'GET',
         credentials: 'include'
       })

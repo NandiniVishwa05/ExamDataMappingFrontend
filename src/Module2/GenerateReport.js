@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Css/GenerateReport.css'
 import * as XLSX from 'xlsx';
 import { useNavigate } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
 export default function GenerateReport() {
     const [courses, setCourses] = useState([]);
     const [courseId, setCourseId] = useState();
@@ -13,7 +13,7 @@ export default function GenerateReport() {
     const [facultyName, setFacultyName] = useState();
     const navigate = useNavigate()
     const fetchcourses = async () => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchcourses`, {
+        let res = await fetch(`http://localhost:3443/fetchcourses`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -34,7 +34,7 @@ export default function GenerateReport() {
         elements[5].disabled = true;
         elements[4].value = "Select...";
         // console.log(e.target.value);
-        let res = await fetch(`http://192.168.77.141:3443/fetchcourseid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -58,7 +58,7 @@ export default function GenerateReport() {
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsemanddiv/${courseid}`, {
+        let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -74,17 +74,24 @@ export default function GenerateReport() {
     }
 
     const fetchSubjects = async (e) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsubjects/${courseId}/${e.target.value}`, {
+        let res = await fetch(`http://localhost:3443/fetchsubjects/${courseId}/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
         });
         res = await res.json();
+
+        if (res.length === 0) {
+            toast.error('Subjects not found!')
+            setSubjects([]);
+            document.getElementsByClassName('inputitem')[5].selectedIndex = 0;
+            document.getElementsByClassName('inputitem')[5].disabled = true;
+        }
+
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
-        // console.log(res);
 
         if (res !== "error") {
             setSubjects(res);
@@ -92,7 +99,7 @@ export default function GenerateReport() {
     }
 
     const fetchSubjectId = async (e) => {
-        let res = await fetch(`http://192.168.77.141:3443/fetchsubjectid/${e.target.value}`, {
+        let res = await fetch(`http://localhost:3443/fetchsubjectid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
 
@@ -111,17 +118,14 @@ export default function GenerateReport() {
     }
     const validateInputs = () => {
         let elements = document.getElementsByClassName('inputitem');
-        let errormsg = document.querySelector('.selectprogramerrormsgitem');
         let errorcounter = 0;
         for (let i = 0; i < elements.length; i++) {
             const element = elements[i];
             if (element.value === "Select..." || element.value === "") {
                 errorcounter++;
                 element.style.borderColor = "red";
-                errormsg.innerHTML = "Please fill the details!"
-                errormsg.style.color = "Red"
+                toast.error("Please fill the details!");
             } else {
-                errormsg.innerHTML = ""
                 element.style.borderColor = "#acacac";
             }
         }
@@ -133,7 +137,6 @@ export default function GenerateReport() {
 
     }
     const fetchprogramid = async () => {
-        let errele = document.getElementsByClassName('selectprogramerrormsgitem')
         let data = {
             exam_pattern: document.getElementsByClassName('inputitem')[0].value,
             course_id: courseId,
@@ -144,7 +147,7 @@ export default function GenerateReport() {
         }
         // console.log("hey");
 
-        let res = await fetch('http://192.168.77.141:3443/fetchprogramidforreport', {
+        let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
             method: 'POST',
             credentials: 'include',
 
@@ -161,8 +164,7 @@ export default function GenerateReport() {
         }
         // console.log(res);
         if (res.msg === "notfound") {
-            errele[0].innerHTML = "Data does not exit !"
-            errele[0].style.color = "red";
+            toast.error("Data does not exit !")
         } else {
             document.querySelector('.generatereportmaincontainer').style.display = "flex";
             setSubjectCode(res.data[0].subject_code);
@@ -217,151 +219,154 @@ export default function GenerateReport() {
     }, [])
 
     return (
-        <div className="insertmarkmodulesmaincontainer">
-            <div className="insertmarksmodulechildcontainer">
-                <div className="selectprogrammaincontainer">
-                    <div className="selectprogramheader">
-                        <p>Select Program</p>
-                    </div>
-                    <div className="selectprograminputlist">
-                        <div className="selectprograminputitem">
-                            <p>Examination Pattern</p>
-                            <select className='inputitem ddinputitem' onChange={() => {
-                                let elements = document.getElementsByClassName('inputitem');
-                                elements[1].disabled = false;
-                                fetchcourses();
-                            }} >
-                                <option value="Select...">Select...</option>
-                                <option value="Regular">Regular</option>
-                                <option value="ATKT">ATKT</option>
-                            </select>
+        <>
+            <ToastContainer />
+            <div className="insertmarkmodulesmaincontainer">
+                <div className="insertmarksmodulechildcontainer">
+                    <div className="selectprogrammaincontainer">
+                        <div className="selectprogramheader">
+                            <p>Select Program</p>
                         </div>
-                        <div className="selectprograminputitem">
-                            <p>Course Name</p>
-                            <select disabled className='inputitem ddinputitem' onChange={(e) => {
-                                fetchCourseId(e);
-                                let elements = document.getElementsByClassName('inputitem');
-                                elements[2].disabled = false;
-                            }}>
-                                <option value='Select...' >Select...</option>
-                                {courses.map((data, index) => (
+                        <div className="selectprograminputlist">
+                            <div className="selectprograminputitem">
+                                <p>Examination Pattern</p>
+                                <select className='inputitem ddinputitem' onChange={() => {
+                                    let elements = document.getElementsByClassName('inputitem');
+                                    elements[1].disabled = false;
+                                    fetchcourses();
+                                }} >
+                                    <option value="Select...">Select...</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="ATKT">ATKT</option>
+                                </select>
+                            </div>
+                            <div className="selectprograminputitem">
+                                <p>Course Name</p>
+                                <select disabled className='inputitem ddinputitem' onChange={(e) => {
+                                    fetchCourseId(e);
+                                    let elements = document.getElementsByClassName('inputitem');
+                                    elements[2].disabled = false;
+                                }}>
+                                    <option value='Select...' >Select...</option>
+                                    {courses.map((data, index) => (
+                                        <>
+                                            <option value={data.course_name}>{data.course_name}</option>
+                                        </>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="selectprograminputitem">
+                                <p>Year</p>
+                                <select disabled className='inputitem ddinputitem' onChange={() => {
+                                    let elements = document.getElementsByClassName('inputitem');
+                                    elements[3].disabled = false;
+                                }}>
+                                    <option value="Select...">Select...</option>
+                                    <option value="FY">FY</option>
+                                    <option value="SY">SY</option>
+                                    <option value="TY">TY</option>
+                                </select>
+                            </div>
+                            <div className="selectprograminputitem">
+                                <p>Division</p>
+                                <select disabled className='inputitem ddinputitem' onChange={() => {
+                                    let elements = document.getElementsByClassName('inputitem');
+                                    elements[4].disabled = false;
+                                }}>
+                                    <option value="Select...">Select...</option>
+                                    {divs.map((item, index) => (
+                                        <>
+                                            {index < division ? <option value={item}>{item}</option> : null}
+                                        </>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="selectprograminputitem">
+                                <p>Semester</p>
+                                <select disabled className='inputitem ddinputitem' onChange={(e) => {
+                                    let elements = document.getElementsByClassName('inputitem');
+                                    elements[5].disabled = false;
+                                    fetchSubjects(e)
+                                }}>
+                                    <option value="Select...">Select...</option>
+                                    {sems.map((item, index) => (
+                                        <>
+                                            {item <= semester ? <option value={item}>{item}</option> : null}
+                                        </>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="selectprograminputitem">
+                                <p>Subject Name</p>
+                                <select disabled className='inputitem ddinputitem' onChange={(e) => {
+                                    fetchSubjectId(e)
+                                }}>
+                                    <option value="Select...">Select...</option>
+                                    {subjects.map((data, index) => (
+                                        <>
+                                            <option value={data.subject_name}>{data.subject_name}</option>
+                                        </>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="selectprogramsubmitbtncontainer">
+                            <div className="selectprogramsubmitbtn" onClick={validateInputs}>
+                                <p>Submit</p>
+                            </div>
+                            <div className="selectprogramerrormsg">
+                                <p className='selectprogramerrormsgitem'></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="generatereportmaincontainer">
+                        <div className="generatereportheader">
+                            <label>Report</label>
+                        </div>
+                        <div className="generatereportitems">
+                            <div className="generatereportshowitem">
+                                <label className='reportheader'>Subject Name : Core Java</label>
+                                <label className='reportheader'>Class : TY BSCIT A </label>
+                            </div>
+                            <div className="generatereportshowitem">
+                                <label className='reportheader'>Subject Code : UTSPO1</label>
+                                <label className='reportheader'> Semester : 2 </label>
+                            </div>
+                            <div className="generatereportshowitem" onClick={fetchDataAndExport}>
+                                <button className='downloadbtn'>Download Report</button>
+                            </div>
+                        </div>
+                        <div className="generatereporttablesection">
+                            <table>
+                                <tr className='tableheader'>
+                                    <th>Roll No.</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                    <th>Q4</th>
+                                    <th>Q5</th>
+                                    <th>Total</th>
+                                    <th>Total(in words)</th>
+                                </tr>
+                                {studentData.map((item, index) => (
                                     <>
-                                        <option value={data.course_name}>{data.course_name}</option>
+                                        <tr>
+                                            <td>{item.student_rollno}</td>
+                                            <td>{item.q1}</td>
+                                            <td>{item.q2}</td>
+                                            <td>{item.q3}</td>
+                                            <td>{item.q4}</td>
+                                            <td>{item.q5}</td>
+                                            <td>{item.total}</td>
+                                            <td>{item.total_in_words}</td>
+                                        </tr>
                                     </>
                                 ))}
-                            </select>
+                            </table>
                         </div>
-                        <div className="selectprograminputitem">
-                            <p>Year</p>
-                            <select disabled className='inputitem ddinputitem' onChange={() => {
-                                let elements = document.getElementsByClassName('inputitem');
-                                elements[3].disabled = false;
-                            }}>
-                                <option value="Select...">Select...</option>
-                                <option value="FY">FY</option>
-                                <option value="SY">SY</option>
-                                <option value="TY">TY</option>
-                            </select>
-                        </div>
-                        <div className="selectprograminputitem">
-                            <p>Division</p>
-                            <select disabled className='inputitem ddinputitem' onChange={() => {
-                                let elements = document.getElementsByClassName('inputitem');
-                                elements[4].disabled = false;
-                            }}>
-                                <option value="Select...">Select...</option>
-                                {divs.map((item, index) => (
-                                    <>
-                                        {index < division ? <option value={item}>{item}</option> : null}
-                                    </>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="selectprograminputitem">
-                            <p>Semester</p>
-                            <select disabled className='inputitem ddinputitem' onChange={(e) => {
-                                let elements = document.getElementsByClassName('inputitem');
-                                elements[5].disabled = false;
-                                fetchSubjects(e)
-                            }}>
-                                <option value="Select...">Select...</option>
-                                {sems.map((item, index) => (
-                                    <>
-                                        {item <= semester ? <option value={item}>{item}</option> : null}
-                                    </>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="selectprograminputitem">
-                            <p>Subject Name</p>
-                            <select disabled className='inputitem ddinputitem' onChange={(e) => {
-                                fetchSubjectId(e)
-                            }}>
-                                <option value="Select...">Select...</option>
-                                {subjects.map((data, index) => (
-                                    <>
-                                        <option value={data.subject_name}>{data.subject_name}</option>
-                                    </>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="selectprogramsubmitbtncontainer">
-                        <div className="selectprogramsubmitbtn" onClick={validateInputs}>
-                            <p>Submit</p>
-                        </div>
-                        <div className="selectprogramerrormsg">
-                            <p className='selectprogramerrormsgitem'></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="generatereportmaincontainer">
-                    <div className="generatereportheader">
-                        <label>Report</label>
-                    </div>
-                    <div className="generatereportitems">
-                        <div className="generatereportshowitem">
-                            <label className='reportheader'>Subject Name : Core Java</label>
-                            <label className='reportheader'>Class : TY BSCIT A </label>
-                        </div>
-                        <div className="generatereportshowitem">
-                            <label className='reportheader'>Subject Code : UTSPO1</label>
-                            <label className='reportheader'> Semester : 2 </label>
-                        </div>
-                        <div className="generatereportshowitem" onClick={fetchDataAndExport}>
-                            <button className='downloadbtn'>Download Report</button>
-                        </div>
-                    </div>
-                    <div className="generatereporttablesection">
-                        <table>
-                            <tr className='tableheader'>
-                                <th>Roll No.</th>
-                                <th>Q1</th>
-                                <th>Q2</th>
-                                <th>Q3</th>
-                                <th>Q4</th>
-                                <th>Q5</th>
-                                <th>Total</th>
-                                <th>Total(in words)</th>
-                            </tr>
-                            {studentData.map((item, index) => (
-                                <>
-                                    <tr>
-                                        <td>{item.student_rollno}</td>
-                                        <td>{item.q1}</td>
-                                        <td>{item.q2}</td>
-                                        <td>{item.q3}</td>
-                                        <td>{item.q4}</td>
-                                        <td>{item.q5}</td>
-                                        <td>{item.total}</td>
-                                        <td>{item.total_in_words}</td>
-                                    </tr>
-                                </>
-                            ))}
-                        </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
