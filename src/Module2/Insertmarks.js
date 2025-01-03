@@ -75,7 +75,6 @@ export default function Insertmarks() {
 
         });
         res = await res.json();
-        console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -104,7 +103,6 @@ export default function Insertmarks() {
             navigate('/');
             return;
         }
-        // console.log(res);
 
         if (res !== "error") {
             setSubjectId(res[0].subject_id);
@@ -143,7 +141,6 @@ export default function Insertmarks() {
             subject_code: document.getElementsByClassName('inputitem')[6].value,
             faculty_name: document.getElementsByClassName('inputitem')[7].value
         }
-        // console.log("hey");
 
         let res = await fetch('http://localhost:3443/fetchprogramid', {
             method: 'POST',
@@ -187,7 +184,6 @@ export default function Insertmarks() {
     }
     
     const overrideprogramdata = async () => {
-        // console.log(document.getElementsByClassName('inputitem')[0].value);
         let data = {
             program_id: programId,
             exam_pattern: document.getElementsByClassName('inputitem')[0].value,
@@ -221,7 +217,6 @@ export default function Insertmarks() {
     const validatequestioninput = () => {
         let errorcount = 0;
         const element = document.getElementsByClassName('qitem');
-        const errormsg = document.getElementsByClassName('qerrormsg');
 
         for (let i = 0; i < element.length; i++) {
             if (element[i].value === "") {
@@ -232,7 +227,6 @@ export default function Insertmarks() {
             }
         }
         if (errorcount === 0) {
-            errormsg[0].innerHTML = "";
             insertmarksdetails();
         } else {
             toast.error("Please fill the details !");
@@ -241,12 +235,10 @@ export default function Insertmarks() {
 
         for (let i = 0; i < element.length; i++) {
             if (/^\d+$/.test(element[i].value)) {
-                // console.log("number hai");
                 element[i].style.borderColor = "#acacac";
             } else {
                 element[i].style.borderColor = "red";
                 errorcount++;
-                // console.log(element[i].value);
             }
         }
         if (errorcount > 0) {
@@ -351,9 +343,9 @@ export default function Insertmarks() {
                                 }}>
                                     <option value='Select...' >Select...</option>
                                     {courses.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.course_name}>{data.course_name}</option>
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -377,9 +369,9 @@ export default function Insertmarks() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {divs.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {index < division ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -392,9 +384,9 @@ export default function Insertmarks() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {sems.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {item <= semester ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>
@@ -410,9 +402,9 @@ export default function Insertmarks() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {subjects.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.subject_name}>{data.subject_name}</option>
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>
@@ -473,6 +465,6 @@ export default function Insertmarks() {
                     </div>
                 </div>
             </div>
-        </>
+        </ >
     )
 }

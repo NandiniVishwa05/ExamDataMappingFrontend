@@ -55,8 +55,6 @@ export default function InsertSubject() {
     }
 
     const fetchCourseId = async (e) => {
-        // setSubjects([]);
-        // console.log(e.target.value);
         if (e.target.selectedIndex === 0) {
             document.getElementsByClassName('inputitem')[1].disabled = true;
             return;
@@ -68,7 +66,6 @@ export default function InsertSubject() {
         });
 
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -83,8 +80,6 @@ export default function InsertSubject() {
     }
 
     const fetchCourseIdforFilter = async (e) => {
-        // setSubjects([]);
-        // console.log(e.target.value);
         if (e.target.selectedIndex === 0) {
             document.getElementsByClassName('inputitem')[4].disabled = true;
             return;
@@ -96,7 +91,6 @@ export default function InsertSubject() {
         });
 
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -122,7 +116,6 @@ export default function InsertSubject() {
             navigate('/');
             return;
         }
-        // console.log(res);
         setSemester(res.data[0].no_of_semester);
     }
 
@@ -138,7 +131,6 @@ export default function InsertSubject() {
             navigate('/');
             return;
         }
-        // console.log(res);
         setSemesterForFilter(res.data[0].no_of_semester);
     }
 
@@ -167,7 +159,6 @@ export default function InsertSubject() {
             credentials: 'include'
         });
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -176,12 +167,11 @@ export default function InsertSubject() {
             toast.success("Subject Inserted Successfully")
             fetchsubjects();
         } else if (res.msg === "oldsubject") {
-            toast.success("Subject already exists")
+            toast.error("Subject already exists")
         }
     }
 
     const deletesubject = async (index, e) => {
-        // console.log(subject[index]);
         let res = await fetch(`http://localhost:3443/deletesubject/${subject[index].subject_id}`, {
             method: 'GET',
             credentials: 'include'
@@ -189,7 +179,6 @@ export default function InsertSubject() {
         })
 
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -202,7 +191,6 @@ export default function InsertSubject() {
 
     const validatefiltersubject = () => {
         let element = document.getElementsByClassName('ddinputitem');
-        // console.log(element[2].value);
         if (element[2].value !== "Select...") {
             filterbycourses();
         }
@@ -217,14 +205,14 @@ export default function InsertSubject() {
 
         })
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
         }
 
         if (res.msg === "norecordsfound") {
-            toast.success("Records not found!");return;
+            toast.error("Records not found!");
+            return;
         }
         else if (res.msg === "filtersfetched") {
             toast.success("Fetched Successfully!")
@@ -255,9 +243,9 @@ export default function InsertSubject() {
                                 <select className='inputitem ddinputitem addsubjectitem' onChange={(e) => { fetchCourseId(e); }}>
                                     <option value='Select...' >Select...</option>
                                     {courses.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.course_name}>{data.course_name}</option>
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -266,9 +254,9 @@ export default function InsertSubject() {
                                 <select className='inputitem ddinputitem addsubjectitem' disabled onChange={(e) => { }}>
                                     <option value="Select..." >Select...</option>
                                     {sems.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {item <= semester ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -283,9 +271,6 @@ export default function InsertSubject() {
                             </div>
                         </div>
                     </div>
-                    <div className="selectprogramerrormsg">
-                        <p className='selectprogramerrormsgitem'></p>
-                    </div>
                     <div className="insertsubjectfilterandtable">
                         <div className="insertsubjectaddfiltersectioncontainer">
                             <div className="insertsubjectfiltersectionheader">
@@ -299,9 +284,9 @@ export default function InsertSubject() {
                                     }}>
                                         <option value='Select...' >Select...</option>
                                         {courses.map((data, index) => (
-                                            <>
+                                            <div key={index}>
                                                 <option value={data.course_name}>{data.course_name}</option>
-                                            </>
+                                            </div>
                                         ))}
                                     </select>
                                 </div>
@@ -310,9 +295,9 @@ export default function InsertSubject() {
                                     <select disabled className='inputitem ddinputitem' >
                                         <option value="Select..." >Select...</option>
                                         {sems.map((item, index) => (
-                                            <>
+                                            <div key={index}>
                                                 {item <= semesterForFilter ? <option value={item}>{item}</option> : null}
-                                            </>
+                                            </div>
                                         ))}
                                     </select>
                                 </div>

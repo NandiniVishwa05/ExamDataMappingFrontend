@@ -25,12 +25,10 @@ export default function ManageProgram() {
 
         for (let i = 1; i < element.length; i++) {
             if (/^\d+$/.test(element[i].value)) {
-                // console.log("number hai");
                 element[i].style.borderColor = "#acacac";
             } else {
                 element[i].style.borderColor = "red";
                 errorcount++;
-                // console.log(element[i].value);
             }
         }
         if (errorcount > 0) {
@@ -41,7 +39,6 @@ export default function ManageProgram() {
     }
     const insertadminprogramdetail = async () => {
         let element = document.getElementsByClassName('addsubjectitem');
-        // console.log(element[2].value);
         let data = {
             course_name: element[0].value,
             no_of_semester: element[1].value,
@@ -58,7 +55,6 @@ export default function ManageProgram() {
             },
         });
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -79,7 +75,6 @@ export default function ManageProgram() {
         });
 
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -144,11 +139,7 @@ export default function ManageProgram() {
                                 <p>Add</p>
                             </button>
                         </div>
-                        <p className='qerrormsg'></p>
 
-                    </div>
-                    <div className="selectprogramerrormsg">
-                        <p className='selectprogramerrormsgitem'></p>
                     </div>
                     <div className="insertsubjectaddfiltersectioncontainer managecoursesectioncontainer">
                         <div className="insertsubjectfiltersectionheader">
@@ -176,6 +167,7 @@ export default function ManageProgram() {
                         </div>
                     </div>
                 </div>
-            </div></>
+            </div>
+        </>
     )
 }

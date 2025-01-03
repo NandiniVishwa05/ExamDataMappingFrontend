@@ -20,7 +20,6 @@ export default function Sidebar() {
   }
 
   const fetchUserType = async () => {
-    console.log("function");
     try {
       let res = await fetch('http://localhost:3443/fetchusertype', {
         method: 'GET',
@@ -28,7 +27,6 @@ export default function Sidebar() {
       })
 
       res = await res.json();
-      console.log(res);
       // eslint-disable-next-line
       if (res[0].admin_check == 1) {
         setAdminVal(1);

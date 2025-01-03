@@ -18,7 +18,6 @@ export default function GenerateReport() {
             credentials: 'include'
         })
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -33,7 +32,6 @@ export default function GenerateReport() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        // console.log(e.target.value);
         let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
@@ -44,7 +42,6 @@ export default function GenerateReport() {
             navigate('/');
             return;
         }
-        // console.log(res);
 
         if (res !== "error") {
             setCourseId(res[0].course_id);
@@ -68,7 +65,7 @@ export default function GenerateReport() {
             navigate('/');
             return;
         }
-        // console.log(res);
+        // // (res);
         setSemester(res.data[0].no_of_semester);
         setDivision(res.data[0].no_of_division);
     }
@@ -109,7 +106,7 @@ export default function GenerateReport() {
             navigate('/');
             return;
         }
-        // console.log(res);
+        // // (res);
 
         if (res !== "error") {
             setSubjectId(res[0].subject_id);
@@ -145,7 +142,6 @@ export default function GenerateReport() {
             semester: document.getElementsByClassName('inputitem')[4].value,
             subject_id: subjectId,
         }
-        // console.log("hey");
 
         let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
             method: 'POST',
@@ -162,7 +158,6 @@ export default function GenerateReport() {
             navigate('/');
             return;
         }
-        // console.log(res);
         if (res.msg === "notfound") {
             toast.error("Data does not exit !")
         } else {
@@ -249,9 +244,9 @@ export default function GenerateReport() {
                                 }}>
                                     <option value='Select...' >Select...</option>
                                     {courses.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.course_name}>{data.course_name}</option>
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -275,9 +270,9 @@ export default function GenerateReport() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {divs.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {index < division ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -290,9 +285,9 @@ export default function GenerateReport() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {sems.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {item <= semester ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>
@@ -303,9 +298,9 @@ export default function GenerateReport() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {subjects.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.subject_name}>{data.subject_name}</option>
-                                        </>
+                                        </div>
                                     ))}
                                 </select>
                             </div>
@@ -313,9 +308,6 @@ export default function GenerateReport() {
                         <div className="selectprogramsubmitbtncontainer">
                             <div className="selectprogramsubmitbtn" onClick={validateInputs}>
                                 <p>Submit</p>
-                            </div>
-                            <div className="selectprogramerrormsg">
-                                <p className='selectprogramerrormsgitem'></p>
                             </div>
                         </div>
                     </div>
@@ -349,7 +341,7 @@ export default function GenerateReport() {
                                     <th>Total(in words)</th>
                                 </tr>
                                 {studentData.map((item, index) => (
-                                    <>
+                                    <div key={index}>
                                         <tr>
                                             <td>{item.student_rollno}</td>
                                             <td>{item.q1}</td>
@@ -360,13 +352,13 @@ export default function GenerateReport() {
                                             <td>{item.total}</td>
                                             <td>{item.total_in_words}</td>
                                         </tr>
-                                    </>
+                                    </div>
                                 ))}
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </ >
     )
 }

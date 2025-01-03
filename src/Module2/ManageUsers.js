@@ -8,11 +8,9 @@ export default function ManageUsers() {
   const navigate = useNavigate()
 
   const validateuserdetails = () => {
-    console.log("heelo");
 
     const element1 = document.getElementsByClassName('userid');
     const element2 = document.getElementsByClassName('password');
-    // console.log(element1[0].value);
     let errcount = 0;
     if (element1[0].value === "") {
       errcount++
@@ -63,7 +61,6 @@ export default function ManageUsers() {
 
     });
     res = await res.json();
-    // console.log(res.msg);
     if (res.msg === "InvalidToken" || res.msg === "NoToken") {
       navigate('/');
       return;
@@ -99,18 +96,15 @@ export default function ManageUsers() {
       navigate('/');
       return;
     }
-    // console.log(res);
     if (res.msg === "insertedsuccesfully") {
       toast.success("User Added Successfully");
       element1[0].value = "";
       element2[0].value = "";
       fetchusertabledetails();
-      // setUsers(res.data)
     }
   }
 
   const fetchusertabledetails = async () => {
-    // console.log("users fetched");
     let res = await fetch('http://localhost:3443/fetchusers', {
       method: 'GET',
       credentials: 'include'
@@ -122,13 +116,11 @@ export default function ManageUsers() {
       return;
     }
     if (res.msg == "usersfetched") {
-      // toast.success("Fetched Successfully!")
       setUsers(res.data)
     }
   }
 
   const deleteuser = async (index) => {
-    // console.log(users[index].user_name);
     let res = await fetch(`http://localhost:3443/deleteuser/${users[index].user_name}`, {
       method: 'GET',
       credentials: 'include'
@@ -139,13 +131,10 @@ export default function ManageUsers() {
       navigate('/');
       return;
     }
-    // console.log(res);
     if (res.msg === "userdeleted") {
       toast.success("User deleted successfully!")
-      // console.log("deleted");
 
       fetchusertabledetails();
-      // setUsers(res.data)
     }
   }
 

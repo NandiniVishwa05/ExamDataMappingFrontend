@@ -17,7 +17,6 @@ export default function InsertStudentMarks() {
             credentials: 'include'
         })
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -33,7 +32,6 @@ export default function InsertStudentMarks() {
         let elements = document.getElementsByClassName('inputitem');
         elements[5].disabled = true;
         elements[4].value = "Select...";
-        // console.log(e.target.value);
         let res = await fetch(`http://localhost:3443/fetchcourseid/${e.target.value}`, {
             method: 'GET',
             credentials: 'include'
@@ -41,7 +39,6 @@ export default function InsertStudentMarks() {
         });
 
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -68,7 +65,6 @@ export default function InsertStudentMarks() {
             navigate('/');
             return;
         }
-        // console.log(res);
         setSemester(res.data[0].no_of_semester);
         setDivision(res.data[0].no_of_division);
     }
@@ -101,7 +97,6 @@ export default function InsertStudentMarks() {
         });
 
         res = await res.json();
-        // console.log(res);
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
@@ -138,7 +133,6 @@ export default function InsertStudentMarks() {
             semester: document.getElementsByClassName('inputitem')[4].value,
             subject_id: subjectId,
         }
-        // console.log("hey");
 
         let res = await fetch('http://localhost:3443/fetchprogramidforreport', {
             method: 'POST',
@@ -154,7 +148,7 @@ export default function InsertStudentMarks() {
         if (res.msg === "InvalidToken" || res.msg === "NoToken") {
             navigate('/');
             return;
-        } // console.log(res);
+        } 
         if (res.msg === "notfound") {
             toast.error("Data does not exit !")
         } else {
@@ -188,16 +182,13 @@ export default function InsertStudentMarks() {
             toast.error("Please fill the details !")
             return;
         } 
-        // console.log(element);
 
         for (let i = 0; i < element.length; i++) {
             if (/^\d+$/.test(element[i].value)) {
-                // console.log("number hai");
                 element[i].style.borderColor = "#acacac";
             } else {
                 element[i].style.borderColor = "red";
                 errorcount++;
-                // console.log(element[i].value);
             }
         }
         if (errorcount > 0) {
@@ -281,9 +272,9 @@ export default function InsertStudentMarks() {
                                 }}>
                                     <option value='Select...' >Select...</option>
                                     {courses.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.course_name}>{data.course_name}</option>
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>
@@ -307,9 +298,9 @@ export default function InsertStudentMarks() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {divs.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {index < division ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>
@@ -322,9 +313,9 @@ export default function InsertStudentMarks() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {sems.map((item, index) => (
-                                        <>
+                                        <div key={index}>
                                             {item <= semester ? <option value={item}>{item}</option> : null}
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>
@@ -335,9 +326,9 @@ export default function InsertStudentMarks() {
                                 }}>
                                     <option value="Select...">Select...</option>
                                     {subjects.map((data, index) => (
-                                        <>
+                                        <div key={index}>
                                             <option value={data.subject_name}>{data.subject_name}</option>
-                                        </>
+                                        </div >
                                     ))}
                                 </select>
                             </div>

@@ -16,8 +16,6 @@ export default function LoginPage() {
     const validatelogindetails = () => {
         const userid = document.getElementsByClassName('userid');
         const userpassword = document.getElementsByClassName('userpassword');
-        const errormsg = document.getElementsByClassName('errormsg');
-        console.log(userpassword);
 
         let errorcount = 0;
 
@@ -50,7 +48,6 @@ export default function LoginPage() {
         })
 
         res = await res.json();
-        console.log(res);
         if (res.msg === "usernotexist") {
             userid[0].style.border = "1px solid red";
             userpassword[0].style.border = "1px solid red";
@@ -58,7 +55,6 @@ export default function LoginPage() {
         } else {
             userpassword[0].style.border = "none";
             userid[0].style.border = "none";
-            console.log(res.data[0].admin_check);
             dispatch(setAdminValue(res.data[0].admin_check));
             navigate('/dashboard/insertprogram');
         }
@@ -102,15 +98,11 @@ export default function LoginPage() {
     }
     const randomNumber = (min, max) => {
         otp = Math.floor(Math.random() * (max - min) + min);
-        console.log("Generated otp", otp);
-        console.log("Generated otp type", typeof (otp));
         return otp;
     }
     const validateemail = () => {
-        console.log("hello");
 
         let email = document.getElementsByClassName('forgotemailinput')[0].value;
-        console.log(email);
         let ecount = 0;
         if (email === "") {
             toast.error("Please ! Enter Email ID.");
@@ -136,7 +128,6 @@ export default function LoginPage() {
         });
         res = await res.json();
         setUid(res);
-        console.log(res);
 
         if (res.msg !== "validEmail") {
             document.getElementsByClassName('forgotemailinput')[0].style.border = "1px solid red";
@@ -151,8 +142,6 @@ export default function LoginPage() {
         let email = document.getElementsByClassName('forgotemailinput')[0].value;
         otp = randomNumber(100000, 999999);
         setOtp(otp);
-        console.log(otp);
-        console.log(email);
         let data = {
             otp: otp,
             email: email
@@ -166,7 +155,6 @@ export default function LoginPage() {
             }
         });
         res = await res.json();
-        console.log(res);
         if (res.msg === "EmailSentSuccessfully") {
             toast.success("Email sent Successfully !");
             document.getElementsByClassName('otpemail')[0].innerHTML = `${email}`;
@@ -178,8 +166,6 @@ export default function LoginPage() {
         let emailpage = document.getElementsByClassName('forgotemailcontainer');
         otppage[0].style.display = "flex";
         emailpage[0].style.display = 'none';
-        console.log(otp);
-
     };
     const disableotppage = () => {
         let otppage = document.getElementsByClassName('forgotpasswordcontainer');
@@ -191,8 +177,6 @@ export default function LoginPage() {
         let element = document.getElementsByClassName('otpinput')[0].value;
         let setpasswordpage = document.getElementsByClassName('setpasswordcontainer')[0];
         let verifyemailpage = document.getElementsByClassName('forgotpasswordcontainer')[0];
-        console.log("Email otp", otp);
-        console.log("Input otp", element);
         if (otp == element) {
             element = "";
             setpasswordpage.style.display = "flex";
@@ -204,8 +188,6 @@ export default function LoginPage() {
     }
     const validatepassword = () => {
         let element = document.getElementsByClassName('setpasswordinput');
-        console.log(element[0].value);
-        console.log(element[1].value);
         let err = 0;
         if (element[0].value == "" || element[1].value == "") {
             err++;
@@ -231,7 +213,6 @@ export default function LoginPage() {
     }
     const insertpassword = async () => {
         let password = document.getElementsByClassName('setpasswordinput')[0].value;
-        console.log(uid.data[0].user_id);
 
         let data = {
             uid: uid.data[0].user_id,
@@ -246,7 +227,6 @@ export default function LoginPage() {
             }
         });
         res = await res.json();
-        console.log(res);
         if (res.msg == "insertedsuccesfully") {
             toast.success("Password updated Successfully!");
             document.getElementsByClassName('logincontainer')[0].style.display = "flex";
@@ -269,12 +249,10 @@ export default function LoginPage() {
                     <div className="logincontaineriddiv">
                         <label className='useridlabel'>User Id</label>
                         <input type='text' className='userid' name='userid'></input>
-                        <label className='errormsg'></label>
                     </div>
                     <div className="logincontainerpassworddiv">
                         <label className='useyrpasswordlabel'>Password</label>
                         <input type='password' className='userpassword'></input>
-                        <label className='errormsg'></label>
                     </div>
                     <div className="forgotpassworddiv" onClick={enableemailpage}>
                         <label className='forgotpasswordlabel'>Forgot Password ?</label>
@@ -285,7 +263,7 @@ export default function LoginPage() {
                 </div>
                 <div className="forgotpasswordcontainer">
                     <div className="backbuttondiv" onClick={disableotppage}>
-                        <label className='backbtn'><i class="fa-solid fa-arrow-left"></i></label>
+                        <label className='backbtn'><i className="fa-solid fa-arrow-left"></i></label>
                         <label className='backbtn'>Back</label>
                     </div>
                     <div className="forgotpasswordcontainerheader">
@@ -327,7 +305,7 @@ export default function LoginPage() {
                 </div>
                 <div className="forgotemailcontainer">
                     <div className="forgotemailcontainerbackbuttondiv" onClick={enablehomepage}>
-                        <label className='forgotemailcontainerbackbtn'><i class="fa-solid fa-arrow-left"></i></label>
+                        <label className='forgotemailcontainerbackbtn'><i className="fa-solid fa-arrow-left"></i></label>
                         <label className='forgotemailcontainerbackbtn'>Back</label>
                     </div>
                     <div className="forgotemailheader">
@@ -338,7 +316,6 @@ export default function LoginPage() {
                             <img src={otpimg2} alt='otpimg' className='otpimage'></img>
                         </div>
                         <div className="forgotemailinputdiv">
-                            {/* <label htmlFor="" className="forgotemailinputlabel">Enter Email</label> */}
                             <input type="text" name="" id="" className="forgotemailinput" placeholder='username@gmail.com' />
                         </div>
                     </div>
