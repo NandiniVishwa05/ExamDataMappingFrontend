@@ -1,0 +1,238 @@
+.insertmarkmodulesmaincontainer {
+    width: 80vw;
+}
+
+.selectprogramheader {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 2vh 2vw;
+}
+
+.selectprograminputlist {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 2vw;
+    /* margin-top: 2vh; */
+    justify-content: space-between;
+}
+
+.selectprograminputitem {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    padding-bottom: 4vh;
+}
+
+.selectprograminputitem select {
+    border: 1px solid rgb(180, 180, 180);
+    width: 70%;
+    background-color: rgb(238, 238, 238);
+}
+
+.selectprograminputitem input {
+    border: 1px solid rgb(156, 156, 156);
+    background-color: rgb(240, 240, 240);
+    width: 70%;
+}
+
+.selectprogramsubmitbtncontainer {
+    display: flex;
+    padding: 0 2vw;
+    padding-bottom: 3vh;
+    /* border-radius: 10px; */
+}
+
+.selectprogramsubmitbtn {
+    padding: 1.5vh 3vw;
+    background-color: rgb(0, 0, 120);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.selectprogramprevbtn {
+    padding: 1.5vh 3vw;
+    background-color: rgb(129, 129, 129);
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.selectprogramprevbtn:hover {
+    background-color: rgb(99, 98, 98);
+}
+
+.insertmarksmaincontainer {
+    display: none;
+    margin-top: 4vh;
+    box-shadow: 0 0px 8px 0 rgba(184, 184, 184, 0.2), 0 0px 20px 0 rgba(179, 179, 179, 0.19);
+    border-radius: 10px;
+}
+
+.insertmarkssubmitbtncontainer {
+    display: flex;
+    padding: 0 2vw;
+    padding-bottom: 3vh;
+    gap: 2vw;
+}
+
+.selectprograminputrollnoitem {
+    width: 100%;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.selectprograminputrollnoitem input {
+    width: 20%;
+}
+
+.insertmarksinputlist {
+    padding-top: 0;
+}
+
+.selectprogramsubmitbtn:hover {
+    background-color: rgba(0, 0, 100);
+}
+
+.selectprogrammaincontainer {
+    box-shadow: 0 0px 8px 0 rgba(73, 73, 73, 0.2), 0 0px 20px 0 rgba(56, 56, 56, 0.19);
+    border-radius: 10px;
+}
+
+.selectprogrammaincontainer .selectprograminputlist .selectprograminputitem select {
+
+    border: 1px solid #acacac;
+}
+
+.selectprogrammaincontainer .selectprograminputlist .selectprograminputitem input {
+    background-color: rgb(238, 238, 238);
+    border-radius: 3px; 
+    outline: none;
+    border: 1px solid #acacac;
+}
+
+.selectprogramerrormsg {
+    display: flex;
+    align-items: center;
+    margin-left: 2vw;
+}
+
+.popupbox {
+    display: none;
+    flex-direction: column;
+    top: 38%;
+    left: 40%;
+    z-index: 5;
+    gap: 2vh;
+    width: 25vw;
+    position: fixed;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: white;
+    padding: 25px 20px;
+    border-radius: 5px;
+}
+
+.overlay {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.452);
+    position: fixed;
+    z-index: 3;
+}
+
+.popupboxsection1 {
+    font-size: 1.2rem;
+}
+
+.popupboxsection2 {
+    display: flex;
+    gap: 1vw;
+}
+
+.insertdatabtn {
+    font-size: 1.1rem;
+}
+
+.qerrormsg {
+    display: none;
+    align-items: center;
+}
+
+.managecourseinputitem {
+    padding-bottom: 0;
+}
+
+.insertmarksmodulechildcontainer {
+    padding: 0vh 1vw;
+    padding-top: 2vh;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .insertmarkmodulesmaincontainer {
+        width: 100vw;
+        margin-top: 9vh;
+    }
+
+    .selectprogramheader {
+        padding: 2vh 4vw;
+        font-size: 1.5rem;
+    }
+
+    .selectprograminputlist {
+        padding: 1vh 4vw;
+        gap: 2vh;
+    }
+
+    .selectprograminputitem {
+        width: 100%;
+        padding-bottom: 0;
+    }
+
+    .selectprogramsubmitbtncontainer {
+        padding: 0% 4vw;
+        padding-bottom: 3vh;
+        padding-top: 2vh;
+    }
+
+    .insertmarksmodulechildcontainer {
+        padding: 2vh 4vw;
+    }
+
+    .selectprogrammaincontainer {
+        padding: 1vh 3vw;
+    }
+
+    .selectprogramsubmitbtn {
+        padding: 1.2vh 5vw;
+        font-size: .7rem;
+    }
+
+    .selectprograminputrollnoitem {
+        justify-content: space-between;
+    }
+
+    .selectprograminputrollnoitem input {
+        width: 70%;
+    }
+
+    .selectprograminputitem p {
+        font-size: .8rem;
+    }
+
+    .selectprograminputitem select {
+        width: 55%;
+        background-color: rgb(238, 238, 238);
+        border-radius: 3px;
+        font-size: .8rem;
+    }
+
+    .selectprograminputitem input {
+        width: 55%;
+        /* background-color: rgb(128, 32, 32); */
+        border-radius: 3px;
+        font-size: .8rem;
+    }
+}

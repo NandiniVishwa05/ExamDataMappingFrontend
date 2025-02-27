@@ -1,0 +1,144 @@
+.generatereportmaincontainer {
+    padding: 2vh 2vw;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 0px 8px 0 rgba(184, 184, 184, 0.2), 0 0px 20px 0 rgba(179, 179, 179, 0.19);
+    border-radius: 10px;
+    margin-top: 2vh;
+    gap: 1vh;
+}
+
+.generatereportheader {
+    font-size: 2rem;
+}
+
+.generatereportitems {
+    display: flex;
+    gap: 10vw;
+    padding: 1vh 0;
+}
+
+.generatereportshowitem {
+    gap: 1vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.12rem;
+}
+
+.downloadbtn {
+    outline: none;
+    border: none;
+    background-color: rgb(0, 0, 120);
+    padding: 1.4vh 1vw;
+    color: white;
+    font-size: 1rem;
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+}
+
+.generatereporttablesection {
+    overflow-y: scroll;
+    height: 34vh;
+}
+
+.generatereporttablesection table {
+    width: 100%;
+    text-align: center;
+}
+
+.generatereporttablesection table .tableheader {
+    position: sticky;
+    width: 100%;
+}
+
+.generatereporttablesection th {
+    /* background-color: rgb(236, 236, 236); */
+    background-color: rgb(0, 0, 120);
+    color: white;
+    border: 1px solid rgb(207, 207, 207);
+    padding: 1vh 0;
+    /* width: 5.2%; */
+    width: 12%;
+    /* font-size: 1.2rem; */
+}
+
+.generatereporttablesection td {
+    font-size: 1.1rem;
+    padding: 1vh 0;
+    /* border: 1px solid rgb(250, 247, 247); */
+    border: 1px solid rgb(209, 209, 214);
+}
+
+.selectprograminputitem select {
+    border: none;
+    padding: 1vh .3vw;
+    font-size: .98rem;
+    outline: none;
+    background-color: rgb(248, 242, 242);
+}
+
+.selectprograminputitem input {
+    border: none;
+    padding: 1vh 0;
+    font-size: .98rem;
+    outline: none;
+    background-color: rgb(248, 242, 242);
+}
+
+
+@media only screen and (max-width: 800px) {
+    .generatereportmaincontainer{
+        display: flex;
+        padding: 2vh 4vw;
+    }
+
+    .generatereportitems{
+        flex-direction: column;
+        gap: 1vh;
+        position: relative;
+    }
+
+    .downloadbtn{
+        /* top:1vh; */
+        bottom: 105%;
+        font-size: .7rem;
+        padding: 1.2vh 3vw;
+        border-radius: 5px;
+    }
+
+    .generatereporttablesection th {
+        width: auto;
+        font-size: .7rem;
+    }
+    .generatereporttablesection td{
+        width: auto;
+        font-size: .8rem;
+    }
+    
+    .selectprogramheader{
+        font-size: 1rem;
+    }
+
+    .generatereportshowitem{
+        font-size: .8rem;
+    }
+    .manageprogramtable td {
+        font-size: .8rem;
+    }
+    .manageprogramtable p {
+        font-size: .8rem;
+    }
+    .manageprogramtable button {
+        font-size: .6rem;
+        padding: .6vh 1.5vw;
+    }
+
+    .manageprogramtable th {
+        font-size: .6rem;
+        padding: .6vh;
+    }
+    .insertsubjectdetailsinputbtn p {
+        padding: .2vh 3vw ;
+    }
+}

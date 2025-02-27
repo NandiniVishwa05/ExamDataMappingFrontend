@@ -1,0 +1,75 @@
+.manageusersmaincontainer {
+    width: 80vw;
+
+}
+
+.manageuserschildcontainer {
+    padding: 2vh 2vw;
+}
+
+.manageuserstable {
+    width: 100%;
+    height: 70vh;
+    /* margin-top: 2vh; */
+    border-radius: 10px;
+}
+
+.manageusersparenttable {
+    border-radius: 10px;
+    margin-top: 2vh;
+    padding: 1.5vh 1.5vw;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(179, 179, 179, 0.19);
+}
+
+.userinputerrormsgdiv {
+    padding: 0 2vw;
+}
+
+.manageuserssection1 {
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(179, 179, 179, 0.19);
+    border-radius: 10px;
+    /* padding-bottom: 2vh; */
+}
+
+.manageprogramtable{
+    height: 57vh;
+}
+
+@media only screen and (max-width: 800px) {
+
+    .manageusersparenttable{
+        padding: 1.5vh 2vw;
+    }
+
+    .manageuserstable {
+        height: 60vh;
+    }
+
+    .manageuserstable th {
+        font-size: .8rem;
+    }
+
+    .manageuserstable td {
+        font-size: .8rem;
+    }
+
+    .manageuserstable button {
+        padding: .7vh 3vw;
+        font-size: .8rem;
+        border-radius: 3px;
+    }
+
+    .insertsubjectdetailsinputbtn {
+        padding: 1vh 2vw;
+        border-radius: 3px;
+        font-size: .8rem
+    }
+
+    .manageuserstable table {
+        width: 100%;
+    }
+
+    .manageuserssection1{
+        padding-bottom: 1vh;
+    }
+}

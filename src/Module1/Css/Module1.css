@@ -1,0 +1,459 @@
+.loginpagecontainer {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logincontainer {
+    /* border: 1px solid red; */
+    height: 50vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 2vh 2vw;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.1), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+    gap: 3.6vh;
+    /* display: none; */
+    /* display: none; */
+}
+
+.logincontainerheader {
+    text-align: center;
+    font-size: 3rem;
+    color: blue;
+}
+
+.logincontaineriddiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.2vh;
+}
+
+.logincontainerpassworddiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.2vh;
+}
+
+.useridlabel {
+    font-size: 1.2rem;
+}
+
+.userid {
+    /* height: 2rem; */
+    padding: 1.2vh .5vw;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: #f3f0f0;
+}
+
+.userpasswordlabel {
+    font-size: 1.2rem;
+}
+
+.userpassword {
+    /* height: 2.4rem; */
+    padding: 1.2vh .5vw;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: #f3f0f0;
+    /* width: ; */
+
+}
+
+.logincontainerloginbtndiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginsubmitbtn {
+    border: none;
+    outline: none;
+    background-color: blue;
+    padding: 1.5vh 1rem;
+    width: 100%;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 3px;
+}
+
+.forgotpassworddiv {
+    display: flex;
+    justify-content: center;
+    color: blue;
+}
+
+.forgotpasswordcontainer {
+    height: 50vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0vh 2vw;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.1), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+    gap: 2vh;
+    padding: 2vh 2vw;
+    display: none;
+}
+
+.forgotpasswordcontainerheader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.forgotpasswordcontainer .backbuttondiv {
+    color: blue;
+    display: flex;
+    gap: .5vw;
+}
+
+.forgotpasswordcontainer .backbtn {
+    color: blue;
+    font-size: 1.3rem;
+}
+
+.forgotemailcontainer .forgotemailcontainerbackbuttondiv {
+    color: blue;
+    display: flex;
+    position: absolute;
+    top: 25%;
+    left: 39%;
+    gap: .5vw;
+}
+
+.forgotemailcontainer .forgotemailcontainerbackbtn {
+    color: blue;
+    font-size: 1.3rem;
+}
+
+.forgotpasswordheader {
+    /* text-align: center; */
+    font-size: 2rem;
+    color: blue;
+}
+
+.forgotpassworddesc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4vh;
+}
+
+.otpdesc {
+    color: rgb(146, 146, 146);
+    font-size: 1.1rem;
+}
+
+.otpemail {
+    color: grey;
+    font-size: 1.2rem;
+
+}
+
+.forgotpasswordbodycontainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+/* .forgotpasswordimagediv{
+    } */
+.otpimage {
+    width: 8vw;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.forgotpasswordinputdiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.otpinput {
+    width: 20%;
+    padding: 1vh 1vw;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    background-color: rgb(231, 231, 231);
+}
+
+.forgotpasswordinputdiv input::placeholder {
+    text-align: center;
+}
+
+.forgotpasswordbtndiv {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.forgotpasswordbtn {
+    width: 40%;
+    padding: 1vh 0;
+    font-size: 1.3rem;
+    border: none;
+    outline: none;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    border: 2px solid blue;
+    border-radius: 3px;
+}
+
+.forgotpasswordbtn:hover {
+    border: 2px solid blue;
+    color: blue;
+    background-color: white;
+}
+
+.setpasswordcontainer {
+    height: 50vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.1), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+    gap: 4vh;
+    padding: 2vh 2vw;
+    display: none;
+}
+
+.setpasswordheader {
+    font-size: 2.2rem;
+    color: blue;
+}
+
+.setpasswordbodycontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    gap: 3vh;
+}
+
+.setpasswordbodycontainerdiv {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 1vh;
+    width: 100%;
+    flex-direction: column;
+}
+
+.setpasswordinputlabel {
+    color: grey;
+    font-size: 1.2rem;
+
+}
+
+.setpasswordinput {
+    background-color: rgb(235, 235, 235);
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    padding: 1.3vh 1vw;
+}
+
+.setpasswordbuttondiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.setpasswordbtn {
+    width: 40%;
+    padding: 1vh 0;
+    font-size: 1.3rem;
+    border: none;
+    outline: none;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    border: 2px solid blue;
+    border-radius: 3px;
+}
+
+.setpasswordbtn:hover {
+    border: 2px solid blue;
+    color: blue;
+    background-color: white;
+}
+
+.forgotemailcontainer {
+    height: 50vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.1), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+    gap: 4vh;
+    padding: 2vh 2vw;
+    display: none;
+}
+
+.forgotemailheader {
+    font-size: 2.2rem;
+    color: blue;
+}
+
+.forgotemailbodycontainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 2vh;
+    width: 100%;
+}
+
+.forgotemailinputdiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.forgotemailinput {
+    width: 85%;
+    padding: 1.3vh .5vw;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background-color: rgb(233, 230, 230);
+}
+
+.forgotemailbtndiv {
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.forgotemailbtn {
+    width: 40%;
+    padding: 1vh 0;
+    font-size: 1.3rem;
+    border: none;
+    outline: none;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    border: 2px solid blue;
+    border-radius: 3px;
+}
+
+.forgotemailbtn:hover {
+    border: 2px solid blue;
+    color: blue;
+    background-color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .logincontainer {
+        width: 70vw;
+        height: auto;
+        gap: 2vh;
+        padding: 2vh 4vw;
+    }
+
+    .forgotpassworddiv {
+        justify-content: flex-start;
+    }
+
+    .forgotemailcontainer {
+        width: 85vw;
+        padding: 1vh 1vw;
+        gap: 3vh;
+    }
+
+    .otpimage {
+        width: 30vw;
+
+    }
+
+    .forgotemailcontainer .forgotemailcontainerbackbuttondiv {
+        color: blue;
+        display: flex;
+        position: absolute;
+        top: 28%;
+        left: 13%;
+        gap: .5vw;
+    }
+
+    .forgotemailinput {
+        padding: 1.5vh 2vw;
+        border-radius: 3px;
+    }
+
+    .forgotemailbtn {
+        width: 90%;
+    }
+
+    .forgotemailheader {
+        font-size: 2rem;
+    }
+
+    .forgotpasswordcontainer {
+        width: 80vw;
+        height: auto;
+    }
+
+    .otpinput {
+        padding: 1vh 2vw;
+        width: 23%;
+        font-size: 1.3rem;
+    }
+
+    .forgotpasswordbtn {
+        width: 90%;
+    }
+    .setpasswordcontainer{
+        width: 80vw;
+        height: auto;
+        padding: 2vh 1vw;
+    }
+    .setpasswordbtn{
+        width: 85%;
+    }
+    .setpasswordinput{
+        /* width: 100%; */
+    }
+    /* .setpasswordinputlabel{ */
+        
+    /* } */
+}
+
+.forgotpassworddiv {
+    font-size: 1.2rem;
+}
