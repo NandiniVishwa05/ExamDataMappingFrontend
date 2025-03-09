@@ -11,6 +11,7 @@ export default function GenerateReport() {
     const [studentData, setStudentData] = useState([]);
     const [subjectCode, setSubjectCode] = useState();
     const [facultyName, setFacultyName] = useState();
+    const [semArr, setSemArr] = useState([]);
     const navigate = useNavigate()
     const fetchcourses = async () => {
         let res = await fetch(`http://localhost:3443/fetchcourses`, {
@@ -53,7 +54,6 @@ export default function GenerateReport() {
     const [semester, setSemester] = useState([]);
     const [division, setDivision] = useState([]);
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
         let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
@@ -185,7 +185,7 @@ export default function GenerateReport() {
                 [`Subject Code: ${subjectCode}`],       // First row
                 [`Class: ${ddelements[2].value} ${ddelements[1].value}-${ddelements[3].value}`],           // Second row
                 [`Semester: ${ddelements[4].value}`],      // Third row
-                [`Faculty name:${facultyName}`],      // Third row
+                [`Faculty name: ${facultyName}`],      // Third row
                 [],                        // Blank row for spacing
                 ["Roll No", "Q1", "Q2", "Q3", "Q4", "Q5", "Total", "Total(in words)"],      // Table header
             ];
@@ -250,9 +250,18 @@ export default function GenerateReport() {
                             </div>
                             <div className="selectprograminputitem">
                                 <p>Year</p>
-                                <select disabled className='inputitem ddinputitem' onChange={() => {
+                                <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[3].disabled = false;
+                                    elements[4].selectedIndex = 0;
+                                    elements[5].disabled = true;
+                                    if (e.target.value === "FY") {
+                                        setSemArr([1, 2]);
+                                    } else if (e.target.value === "SY") {
+                                        setSemArr([3, 4]);
+                                    } else {
+                                        setSemArr([5, 6]);
+                                    }
                                 }}>
                                     <option value="Select...">Select...</option>
                                     <option value="FY">FY</option>
@@ -280,7 +289,7 @@ export default function GenerateReport() {
                                     fetchSubjects(e)
                                 }}>
                                     <option value="Select...">Select...</option>
-                                    {sems.map((item, index) => (
+                                    {semArr.map((item, index) => (
                                         item <= semester ? <option key={index} value={item}>{item}</option> : null
                                     ))}
                                 </select>

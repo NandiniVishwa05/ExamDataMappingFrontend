@@ -8,7 +8,7 @@ export default function InsertStudentMarks() {
     const [subjects, setSubjects] = useState([]);
     const [subjectId, setSubjectId] = useState();
     const [programId, setProgramId] = useState();
-
+    const [semArr, setSemArr] = useState([]);
     const navigate = useNavigate
 
     const fetchcourses = async () => {
@@ -52,7 +52,6 @@ export default function InsertStudentMarks() {
     const [semester, setSemester] = useState([]);
     const [division, setDivision] = useState([]);
     let divs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    let sems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const fetchsemanddiv = async (courseid) => {
         let res = await fetch(`http://localhost:3443/fetchsemanddiv/${courseid}`, {
             method: 'GET',
@@ -278,9 +277,18 @@ export default function InsertStudentMarks() {
                             </div>
                             <div className="selectprograminputitem">
                                 <p>Year</p>
-                                <select disabled className='inputitem ddinputitem' onChange={() => {
+                                <select disabled className='inputitem ddinputitem' onChange={(e) => {
                                     let elements = document.getElementsByClassName('inputitem');
                                     elements[3].disabled = false;
+                                    elements[4].selectedIndex = 0;
+                                    elements[5].disabled = true;
+                                    if (e.target.value === "FY") {
+                                        setSemArr([1, 2]);
+                                    } else if (e.target.value === "SY") {
+                                        setSemArr([3, 4]);
+                                    } else {
+                                        setSemArr([5, 6]);
+                                    }
                                 }}>
                                     <option value="Select...">Select...</option>
                                     <option value="FY">FY</option>
@@ -308,7 +316,7 @@ export default function InsertStudentMarks() {
                                     fetchSubjects(e)
                                 }}>
                                     <option value="Select...">Select...</option>
-                                    {sems.map((item, index) => (
+                                    {semArr.map((item, index) => (
                                         item <= semester ? <option key={index} value={item}>{item}</option> : null
                                     ))}
                                 </select>
